@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn How to House Sit — Join the Waitlist</title>
+<meta name="description" content="A practical, honest course on how to find, apply for and complete your first house sit — built from 22 real international house sits. Join the waitlist for early-bird pricing.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#E6321C">
+<link rel="canonical" href="https://www.housesithub.com/">
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Learn How to House Sit">
+<meta property="og:title" content="Learn How to House Sit — Join the Waitlist">
+<meta property="og:description" content="A practical, honest course on how to find, apply for and complete your first house sit — built from 22 real international house sits. Join the waitlist for early-bird pricing.">
+<meta property="og:url" content="https://www.housesithub.com/">
+<meta property="og:image" content="https://www.housesithub.com/assets/images/kitchen.jpg">
+<meta property="og:image:width" content="1254">
+<meta property="og:image:height" content="1254">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Learn How to House Sit — Join the Waitlist">
+<meta name="twitter:description" content="A practical, honest course on how to find, apply for and complete your first house sit, built from 22 real international house sits.">
+<meta name="twitter:image" content="https://www.housesithub.com/assets/images/kitchen.jpg">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Learn How to House Sit",
+  "description": "A practical beginner course on how to find, apply for, prepare for and complete your first house sit, built from 22 international house sits and 23 years of training experience.",
+  "provider": {
+    "@type": "Organization",
+    "name": "House Sit Hub",
+    "sameAs": "https://www.housesithub.com/"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/images/house-exterior.jpg" fetchpriority="high">
+
+<style>
+  :root{
+    --color-red:#E6321C;
+    --color-red-dark:#C22815;
+    --color-ink:#171512;
+    --color-ink-soft:#2A2621;
+    --color-paper:#FBF7F0;
+    --color-paper-dim:#F3ECE0;
+    --color-line:#E7DDCB;
+    --color-line-dark:#3c362d;
+    --color-clay:#B9855A;
+    --color-sage:#5C6B4F;
+    --color-cream-text:#FBF7F0;
+    --font-display: "Montserrat", sans-serif;
+    --font-body: "Work Sans", sans-serif;
+    --container: 1180px;
+    --section-pad: clamp(56px, 9vw, 104px);
+    --radius: 10px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; overflow-x:hidden;}
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    color:var(--color-ink);
+    background:var(--color-paper);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+    width:100%;
+  }
+  img{max-width:100%; display:block; height:auto;}
+  a{color:inherit;}
+  h1,h2,h3{font-family:var(--font-display); margin:0 0 .4em 0; line-height:1.1; font-weight:700;}
+  p{margin:0 0 1em 0;}
+  ul{margin:0; padding:0;}
+  .wrap{max-width:var(--container); margin:0 auto; padding:0 24px;}
+  section{padding:var(--section-pad) 0;}
+
+  .skip-link{
+    position:absolute; left:-999px; top:auto;
+    background:var(--color-ink); color:var(--color-paper);
+    padding:12px 20px; border-radius:0 0 8px 0; z-index:999;
+    font-weight:600; text-decoration:none;
+  }
+  .skip-link:focus{ left:0; top:0; }
+
+  .eyebrow{
+    display:inline-block;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--color-red);
+    margin-bottom:14px;
+  }
+  .eyebrow.on-dark{ color:#FF8A6E; }
+  .eyebrow.on-red{ color:var(--color-cream-text); opacity:.85; }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:var(--color-red);
+    color:var(--color-cream-text);
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:16px;
+    line-height:1.3;
+    min-height:54px;
+    padding:14px 28px;
+    border-radius:8px;
+    border:none;
+    text-decoration:none;
+    cursor:pointer;
+    transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+    box-shadow:0 12px 26px -10px rgba(230,50,28,0.55);
+    text-align:center;
+    max-width:100%;
+  }
+  /* Long CTA labels (e.g. "Join the Waitlist and Get Early-Bird Pricing")
+     must be able to wrap on narrow screens — nowrap here was pushing the
+     button past the viewport edge and forcing horizontal scroll on mobile. */
+  @media (min-width:560px){
+    .btn{ white-space:nowrap; }
+  }
+  .btn:hover{ background:var(--color-red-dark); transform:translateY(-2px); box-shadow:0 18px 30px -10px rgba(230,50,28,0.6); }
+  .btn:active{ transform:translateY(0); }
+  .btn:focus-visible{ outline:2px solid var(--color-cream-text); outline-offset:3px; }
+  .btn-light{
+    background:var(--color-cream-text);
+    color:var(--color-red);
+    box-shadow:0 12px 26px -10px rgba(0,0,0,0.35);
+  }
+  .btn-light:hover{ background:#fff; color:var(--color-red-dark); }
+
+  /* Header */
+  header.site{
+    position:sticky; top:0; z-index:60;
+    background:rgba(23,21,18,0.55);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    transition:background .25s ease;
+  }
+  header.site.scrolled{
+    background:rgba(251,247,240,0.94);
+    border-bottom:1px solid var(--color-line);
+  }
+  header.site .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:12px; padding-bottom:12px;
+  }
+  header.site img{ height:32px; width:auto; filter:brightness(0) invert(1); transition:filter .25s ease; }
+  header.site.scrolled img{ filter:none; }
+  .header-cta{
+    opacity:0; pointer-events:none;
+    transform:translateY(-6px);
+    transition:opacity .25s ease, transform .25s ease;
+    font-size:14px; min-height:42px; padding:0 20px;
+  }
+  .header-cta.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+
+  /* ===== HERO — full bleed photo ===== */
+  .hero{
+    position:relative;
+    min-height:clamp(480px, 82vh, 820px);
+    display:flex;
+    align-items:center;
+    padding-top:calc(var(--section-pad) * 0.6);
+    padding-bottom:40px;
+    color:var(--color-cream-text);
+    overflow:hidden;
+  }
+  @media (max-width:760px){
+    .hero{ min-height:auto; padding-top:88px; padding-bottom:48px; }
+  }
+  .hero-bg{
+    position:absolute; inset:0; z-index:0;
+  }
+  .hero-bg img{
+    width:100%; height:100%; object-fit:cover; object-position:center 78%;
+  }
+  .hero-bg::after{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(23,21,18,0.75) 0%, rgba(23,21,18,0.45) 38%, rgba(23,21,18,0.85) 100%),
+      linear-gradient(100deg, rgba(23,21,18,0.65) 0%, rgba(23,21,18,0.15) 55%);
+  }
+  .hero .wrap{ position:relative; z-index:1; }
+  .hero-content{ max-width:640px; }
+  .hero h1{
+    font-size:clamp(34px, 6vw, 66px);
+    letter-spacing:-0.01em;
+    color:#fff;
+  }
+  .hero .sub{ font-size:clamp(17px, 2vw, 20px); color:#F1E9DC; max-width:52ch; }
+
+  .hero-cta-row{ display:flex; flex-direction:column; gap:12px; align-items:flex-start; margin-top:30px; }
+  .hero-cta-row .btn{ width:100%; }
+  @media (min-width:480px){ .hero-cta-row .btn{ width:auto; } }
+  .hero-microcopy{ font-size:14px; color:#D8CDBC; }
+
+  /* Floating trust/stat bar that bridges hero and next section (desktop/tablet only — see below for mobile) */
+  .stat-bar{
+    position:relative;
+    z-index:2;
+    margin-top:clamp(28px,6vw,64px);
+    transform:translateY(50%);
+  }
+  .stat-bar-inner{
+    background:var(--color-paper);
+    border-radius:var(--radius);
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    color:var(--color-ink);
+  }
+  @media (max-width:760px){
+    /* On mobile the card no longer floats/overlaps — it sits in normal flow
+       so its height can vary (2-up grid) without breaking the section below */
+    .stat-bar{ transform:none; margin-top:32px; }
+    .stat-bar-inner{ grid-template-columns:repeat(2,1fr); }
+  }
+  .stat-bar-item{
+    padding:22px 18px;
+    text-align:center;
+    border-right:1px solid var(--color-line);
+  }
+  .stat-bar-item:last-child{ border-right:none; }
+  @media (max-width:760px){
+    .stat-bar-item:nth-child(2n){ border-right:none; }
+    .stat-bar-item:nth-child(-n+2){ border-bottom:1px solid var(--color-line); }
+  }
+  .stat-bar-item .num{ font-family:var(--font-display); font-size:clamp(24px,3vw,32px); color:var(--color-red); line-height:1; font-weight:700; }
+  .stat-bar-item .label{ font-size:12.5px; color:#5c5548; margin-top:6px; letter-spacing:.01em; }
+
+  .hero-spacer{ height:0; }
+  @media (min-width: 1px){ .hero-spacer{ } }
+
+  /* ===== reveal ===== */
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+    .reveal.in{ opacity:1; transform:translateY(0); }
+    .hero-content .reveal:nth-child(1){ transition-delay:.02s; }
+    .hero-content .reveal:nth-child(2){ transition-delay:.14s; }
+    .hero-content .reveal:nth-child(3){ transition-delay:.26s; }
+    .hero-content .reveal:nth-child(4){ transition-delay:.38s; }
+  }
+
+  /* ===== section backgrounds ===== */
+  .bg-paper{ background:var(--color-paper); }
+  .bg-dim{ background:var(--color-paper-dim); }
+  .bg-ink{ background:var(--color-ink); color:var(--color-cream-text); }
+  .bg-ink h2, .bg-ink h3{ color:#fff; }
+  .bg-ink .muted{ color:#C9BFAF; }
+  .bg-red{ background:var(--color-red); color:var(--color-cream-text); }
+  .bg-red h2{ color:#fff; }
+
+  .after-hero{ padding-top:calc(var(--section-pad) + 60px); }
+  @media (max-width:760px){ .after-hero{ padding-top:var(--section-pad); } }
+
+  .section-head{ max-width:66ch; margin-bottom:clamp(28px, 4vw, 40px); }
+  .section-head h2{ font-size:clamp(26px, 3.6vw, 40px); }
+
+  /* Problem section — dark contrast block per research (Family Fork / Psychotherapy.net pattern) */
+  .problem-grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,5vw,64px); align-items:start; }
+  @media (max-width:860px){ .problem-grid{ grid-template-columns:1fr; } }
+  .problem-list{ list-style:none; display:flex; flex-direction:column; gap:18px; }
+  .problem-list li{
+    display:flex; gap:14px; align-items:flex-start;
+    font-size:clamp(16px,1.8vw,18px);
+    color:#E9E1D3;
+  }
+  .problem-list li .mark{
+    flex-shrink:0; width:28px; height:28px; border-radius:50%;
+    background:var(--color-red); color:#fff; font-weight:700;
+    display:flex; align-items:center; justify-content:center; font-size:14px;
+    margin-top:2px;
+  }
+  .problem-lede{ font-family:var(--font-display); font-size:clamp(19px,2.4vw,24px); color:#fff; }
+  .problem-close{ font-size:clamp(16px,1.8vw,18px); color:#F1E9DC; margin-top:20px; }
+
+  /* Course intro */
+  .course-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:clamp(28px, 5vw, 64px); align-items:center; }
+  @media (max-width:860px){ .course-grid{ grid-template-columns:1fr; } }
+  .course-photo{
+    position:relative; aspect-ratio:1/1; border-radius:8px; overflow:hidden;
+    transform:rotate(2deg);
+    box-shadow:0 26px 46px -18px rgba(23,21,18,0.35);
+    border:6px solid var(--color-paper);
+    max-width:440px; margin:0 auto;
+  }
+  .course-photo img{ width:100%; height:100%; object-fit:cover; }
+  @media (max-width:860px){ .course-photo{ order:-1; max-width:320px; } }
+  .callout{
+    font-family:var(--font-display);
+    font-size:clamp(19px, 2.4vw, 24px);
+    color:var(--color-ink);
+    background:var(--color-paper-dim);
+    border-left:4px solid var(--color-red);
+    padding:18px 22px;
+    border-radius:0 8px 8px 0;
+    margin-top:24px;
+  }
+
+  /* Benefit cards — card treatment so section doesn't read as flat white */
+  .benefits{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,24px); }
+  @media (max-width:900px){ .benefits{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:600px){ .benefits{ grid-template-columns:1fr; } }
+  .benefit{
+    background:var(--color-paper);
+    border:1px solid var(--color-line);
+    border-radius:10px;
+    padding:26px 22px;
+    box-shadow:0 10px 24px -16px rgba(23,21,18,0.25);
+  }
+  .benefit .tag{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:34px; height:34px; border-radius:8px;
+    background:var(--color-red); color:#fff; font-family:var(--font-display); font-weight:700;
+    margin-bottom:14px; font-size:15px;
+  }
+  .benefit h3{ font-size:18px; font-family:var(--font-body); font-weight:700; }
+  .benefit p{ color:#3a3630; margin:0; font-size:15px; }
+
+  /* CTA repeat band (mid-page) */
+  .cta-band{ text-align:center; }
+  .cta-band h2{ font-size:clamp(24px,3.4vw,34px); max-width:22ch; margin:0 auto 18px auto; }
+  .cta-band .sub{ max-width:56ch; margin:0 auto 26px auto; color:#F1E9DC; }
+
+  /* Why we made this */
+  .why-grid{ display:grid; grid-template-columns:0.85fr 1fr; gap:clamp(28px,5vw,64px); align-items:center; }
+  @media (max-width:860px){ .why-grid{ grid-template-columns:1fr; } }
+  .why-grid .content p{ font-size:clamp(16px, 1.6vw, 18px); }
+  .why-frame{
+    position:relative; aspect-ratio:1/1; border-radius:8px; overflow:hidden;
+    transform:rotate(-2deg);
+    box-shadow:0 26px 46px -18px rgba(23,21,18,0.35);
+    border:6px solid var(--color-paper);
+    max-width:420px; margin:0 auto;
+  }
+  .why-frame img{ width:100%; height:100%; object-fit:cover; }
+  @media (max-width:860px){ .why-frame{ max-width:300px; } }
+
+  /* Who this is for */
+  .for-list{
+    list-style:none; margin:0 auto; padding:0;
+    display:flex; flex-direction:column; gap:0;
+    max-width:680px;
+  }
+  .for-list li{
+    font-size:clamp(16px,2vw,18px);
+    padding:16px 0 16px 30px;
+    position:relative;
+    border-bottom:1px solid var(--color-line);
+  }
+  .for-list li:last-child{ border-bottom:none; }
+  .for-list li::before{
+    content:"—";
+    position:absolute; left:0; top:16px; color:var(--color-red); font-weight:700;
+  }
+  .for-sub{ max-width:60ch; margin:24px auto 0 auto; color:#3a3630; text-align:center; }
+  .for-head{ text-align:center; max-width:60ch; margin:0 auto 32px auto; }
+
+  /* Waitlist form */
+  .waitlist-section{
+    position:relative;
+    overflow:hidden;
+    scroll-margin-top:70px;
+  }
+  .waitlist-section::before{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(circle at 85% 20%, rgba(255,255,255,0.1), transparent 45%);
+    pointer-events:none;
+  }
+  .waitlist-inner{ max-width:640px; margin:0 auto; text-align:center; position:relative; }
+  .waitlist-section h2{ font-size:clamp(28px, 4vw, 42px); }
+  .waitlist-perks{
+    list-style:none; padding:0; margin:28px 0; display:flex; flex-direction:column; gap:10px;
+    text-align:left; max-width:420px; margin-left:auto; margin-right:auto;
+  }
+  .waitlist-perks li{ font-size:16px; padding-left:26px; position:relative; }
+  .waitlist-perks li::before{ content:"✓"; position:absolute; left:0; font-weight:700; }
+
+  .urgency-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,0.14);
+    border:1px solid rgba(255,255,255,0.35);
+    color:#fff; font-size:13px; font-weight:600;
+    padding:8px 16px; border-radius:999px;
+    margin-bottom:20px;
+  }
+  .urgency-badge .dot{
+    width:8px; height:8px; border-radius:50%; background:#FFD86B;
+    box-shadow:0 0 0 3px rgba(255,216,107,0.25);
+  }
+
+  form.waitlist-form{
+    background:var(--color-paper);
+    color:var(--color-ink);
+    border-radius:var(--radius);
+    padding:clamp(22px,4vw,30px);
+    text-align:left;
+    box-shadow:0 30px 64px -24px rgba(0,0,0,0.5);
+  }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:13px; font-weight:700; margin-bottom:6px; }
+  .field input{
+    width:100%; padding:14px; border-radius:6px;
+    border:1.5px solid var(--color-line); background:#fff;
+    font-family:var(--font-body); font-size:16px; color:var(--color-ink);
+    min-height:48px;
+  }
+  .field input:focus{ outline:2px solid var(--color-red); outline-offset:1px; border-color:var(--color-red); }
+  form.waitlist-form .btn{ width:100%; }
+  .form-note{ font-size:13px; color:#645d51; margin-top:12px; text-align:center; }
+  .success-msg{ display:none; text-align:center; padding:24px 0; }
+  .success-msg.show{ display:block; }
+  .success-msg h3{ font-family:var(--font-display); }
+
+  /* FAQ */
+  .faq{ max-width:800px; margin:0 auto; }
+  .faq details{ border-bottom:1px solid var(--color-line); padding:20px 0; }
+  .faq summary{
+    cursor:pointer; list-style:none;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    font-weight:700; font-size:clamp(16px,2vw,18px);
+  }
+  .faq summary::-webkit-details-marker{ display:none; }
+  .faq summary .glyph{
+    flex-shrink:0; width:26px; height:26px; border-radius:50%;
+    border:1.5px solid var(--color-red); color:var(--color-red);
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px; transition:transform .2s ease;
+  }
+  .faq details[open] summary .glyph{ transform:rotate(45deg); }
+  .faq .faq-a{ margin-top:12px; color:#3a3630; font-size:16px; max-width:70ch; }
+
+  /* Final CTA — dark bookend matching hero */
+  .final-cta{ text-align:center; }
+  .final-cta h2{ font-size:clamp(28px, 4.4vw, 46px); max-width:20ch; margin-left:auto; margin-right:auto; color:#fff; }
+  .final-cta .sub{ max-width:56ch; margin:0 auto 30px auto; font-size:clamp(16px,1.8vw,19px); color:#F1E9DC; }
+  .final-line{ margin-top:18px; font-size:13px; color:#B9AF9E; }
+
+  footer{ background:var(--color-ink); color:#B9AF9E; padding:clamp(36px,6vw,56px) 0; }
+  footer .wrap{
+    display:flex; flex-direction:column; align-items:center;
+    text-align:center; gap:18px;
+  }
+  /* The logo is a square lockup with three stacked lines of text ("LEARN" /
+     "HOW" / "To House Sit"). On this dark background the logo's own black
+     text ("HOW" / "To House Sit") would nearly disappear against the near-
+     black ink, so it stays a single-color white version — but at the old
+     24px height, three stacked lines of text read as an indistinct smudge
+     on both desktop and mobile. Sizing it up fixes the legibility. */
+  footer img{ height:clamp(60px,9vw,80px); width:auto; filter:brightness(0) invert(1); opacity:.95; }
+  footer .fine{ font-size:13px; max-width:48ch; margin:0 auto; }
+</style>
+</head>
+<body>
+
+<a href="#waitlist" class="skip-link">Skip to waitlist form</a>
+
+<header class="site" id="siteHeader">
+  <div class="wrap">
+    <a href="#top" aria-label="Learn How to House Sit — home">
+      <img src="assets/images/logo-transparent.png" width="1254" height="1254" alt="Learn How to House Sit logo">
+    </a>
+    <a href="#waitlist" class="btn header-cta" id="headerCta">Join the Waitlist</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO — full bleed -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="assets/images/house-exterior.jpg" width="1254" height="1254" fetchpriority="high" alt="A stone house with a terracotta roof, one of the family's international house sits">
+    </div>
+    <div class="wrap">
+      <div class="hero-content">
+        <p class="eyebrow on-dark reveal">22 house sits around the world. One honest course about how we did it.</p>
+        <h1 class="reveal">Travel the World, Live Like a Local, and Spend a Lot Less Doing It</h1>
+        <p class="sub reveal">A practical course that shows you how to find, apply for and actually complete your first house sit, based on what our family learned doing 22 of them.</p>
+        <div class="hero-cta-row reveal">
+          <a href="#waitlist" class="btn">Join the Waitlist and Get Early-Bird Pricing</a>
+          <span class="hero-microcopy">Free to join, no spam. You'll get first access and a discount when we launch.</span>
+        </div>
+      </div>
+
+      <div class="stat-bar reveal">
+        <div class="stat-bar-inner">
+          <div class="stat-bar-item"><div class="num">22</div><div class="label">house sits completed</div></div>
+          <div class="stat-bar-item"><div class="num">23</div><div class="label">years in training &amp; course design</div></div>
+          <div class="stat-bar-item"><div class="num">9</div><div class="label">weeks, the longest single sit</div></div>
+          <div class="stat-bar-item"><div class="num">6+</div><div class="label">countries: France, Ireland, Belgium, USA, Mauritius &amp; more</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM — dark contrast block -->
+  <section class="bg-ink after-hero">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow on-dark">The problem</p>
+        <h2>Hotels cost a lot. Tourist areas can feel a bit hollow. And most people never hear about what can go wrong with house sitting.</h2>
+      </div>
+      <div class="problem-grid">
+        <div>
+          <p class="problem-lede">You've probably heard you can travel and stay somewhere for free by looking after a home and its pets while the owners are away. It's a good deal when it works out.</p>
+          <p class="problem-close">We learned most of this the hard way, so you don't have to.</p>
+        </div>
+        <ul class="problem-list">
+          <li><span class="mark">1</span> Applying to sits that don't actually suit their dates, family or lifestyle</li>
+          <li><span class="mark">2</span> Missing warning signs during the homeowner conversation</li>
+          <li><span class="mark">3</span> Arriving unprepared for the pet or home handover</li>
+          <li><span class="mark">4</span> Misunderstanding what the homeowner actually expected</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE COURSE -->
+  <section class="bg-paper">
+    <div class="wrap course-grid">
+      <div>
+        <p class="eyebrow">The course</p>
+        <h2>Learn How to House Sit</h2>
+        <p>Learn How to House Sit is a course for people who want to travel more affordably, stay in a real home instead of a hotel, and look after someone else's house and pets properly while they do it.</p>
+        <p>It comes from 22 house sits our family of four has done in different countries, plus 23 years working in training and course design. It covers how to find sits that actually suit you, how to write an application that gets noticed, what to check before you say yes, how to handle the pet and home care day to day, and how to leave things in a way that gets you invited back.</p>
+        <p class="callout">By the end, you'll know exactly what to do for your first sit, and you'll have the reviews to show for it.</p>
+      </div>
+      <div class="course-photo">
+        <img src="assets/images/kitchen.jpg" width="1254" height="1254" loading="lazy" alt="A family cooking breakfast in the kitchen of a house they're sitting">
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S INSIDE -->
+  <section class="bg-dim">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What's inside</p>
+        <h2>What You'll Learn</h2>
+      </div>
+      <div class="benefits">
+        <div class="benefit">
+          <span class="tag">1</span>
+          <h3>Find sits that actually fit you</h3>
+          <p>Where to look, how to use platforms like TrustedHousesitters, and how to filter listings by dates, location and what your family can handle.</p>
+        </div>
+        <div class="benefit">
+          <span class="tag">2</span>
+          <h3>Write applications homeowners respond to</h3>
+          <p>How to build a profile people trust and write something personal instead of a copy-paste message.</p>
+        </div>
+        <div class="benefit">
+          <span class="tag">3</span>
+          <h3>Know what to ask before you say yes</h3>
+          <p>The questions worth asking and the signs that mean you should probably pass on a sit.</p>
+        </div>
+        <div class="benefit">
+          <span class="tag">4</span>
+          <h3>Get ready properly</h3>
+          <p>Checklists and templates for travel planning, the home and pet handover, and what to do if something goes wrong.</p>
+        </div>
+        <div class="benefit">
+          <span class="tag">5</span>
+          <h3>Handle the day-to-day with confidence</h3>
+          <p>What pet care, home care, gardens, pools and cars actually involve once the owners have left.</p>
+        </div>
+        <div class="benefit">
+          <span class="tag">6</span>
+          <h3>Build a reputation that gets you invited back</h3>
+          <p>How reviews work, how to earn good ones, and how repeat sits and referrals actually happen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MID-PAGE REPEAT CTA -->
+  <section class="bg-red cta-band">
+    <div class="wrap">
+      <h2>Ready for your first house sit?</h2>
+      <p class="sub">Join the waitlist now and get early-bird pricing the moment we launch.</p>
+      <a href="#waitlist" class="btn btn-light">Join the Waitlist and Get Early-Bird Pricing</a>
+    </div>
+  </section>
+
+  <!-- WHY WE MADE THIS -->
+  <section class="bg-paper">
+    <div class="wrap why-grid">
+      <div class="why-frame">
+        <img src="assets/images/family-play.jpg" width="1254" height="1254" loading="lazy" alt="A father and son playing with a toy car track during a house sit">
+      </div>
+      <div class="content">
+        <p class="eyebrow">Why we made this</p>
+        <h2>We've Done 22 of These. Burst Pipes, Missing Cats and All.</h2>
+        <p>Our family of four has completed 22 house sits in different countries, staying anywhere from a week to nine weeks at a time. We've dealt with a burst water pipe in rural France, kept an eye on construction work next door in Belgium, helped out with a home-based business in Ireland, spent an afternoon looking for a cat that had gone missing, and spent two months in France where we became genuine friends with a local château owner and winemaker.</p>
+        <p>We also spent 23 years working in training, so we know how to turn all of that into lessons you can actually use, not just stories.</p>
+        <p><strong>House sitting isn't a free holiday. There's real work involved, and we tell you about that too.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO THIS IS FOR -->
+  <section class="bg-dim">
+    <div class="wrap">
+      <div class="for-head">
+        <p class="eyebrow">Who this is for</p>
+        <h2>Is This You?</h2>
+      </div>
+      <ul class="for-list">
+        <li>Families who want more space and lower costs while travelling</li>
+        <li>Couples, retirees and solo travellers with flexible dates</li>
+        <li>Remote workers who want to stay somewhere longer than a week</li>
+        <li>People who like animals and want that company while they travel</li>
+        <li>Anyone who's curious about house sitting but doesn't know where to start</li>
+      </ul>
+      <p class="for-sub">House sitting won't suit everyone, and that's fine. This course will help you work out honestly if it fits your life before you commit to anything.</p>
+    </div>
+  </section>
+
+  <!-- WAITLIST OFFER -->
+  <section class="waitlist-section bg-red" id="waitlist">
+    <div class="wrap">
+      <div class="waitlist-inner">
+        <span class="urgency-badge"><span class="dot"></span> Early-bird pricing for waitlist members only</span>
+        <p class="eyebrow on-red">Join early. Pay less.</p>
+        <h2>Save Your Spot on the Waitlist</h2>
+        <p style="opacity:.9; max-width:50ch; margin:0 auto;">Learn How to House Sit is launching soon. If you join the waitlist now, you'll get:</p>
+        <ul class="waitlist-perks">
+          <li>First access when the course goes live</li>
+          <li>A discount that's only available to people on this list</li>
+          <li>A few updates along the way as we finish putting the lessons and checklists together</li>
+        </ul>
+
+        <form class="waitlist-form" id="waitlistForm" novalidate>
+          <div class="field">
+            <label for="name">First name</label>
+            <input type="text" id="name" name="name" autocomplete="given-name" placeholder="Jamie" required>
+          </div>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="you@email.com" required>
+          </div>
+          <button type="submit" class="btn">Save My Spot on the Waitlist</button>
+          <p class="form-note">We won't spam you. Just a few updates and your discount code when we launch.</p>
+        </form>
+
+        <div class="success-msg" id="successMsg" role="status" aria-live="polite">
+          <h3>You're on the list.</h3>
+          <p style="opacity:.9;">Thanks for joining — we'll email your discount code the moment Learn How to House Sit goes live.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-paper">
+    <div class="wrap">
+      <div class="section-head" style="margin-left:auto; margin-right:auto; text-align:center;">
+        <p class="eyebrow">Questions</p>
+        <h2>A Few Common Questions</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Is this course just about TrustedHousesitters? <span class="glyph" aria-hidden="true">+</span></summary>
+          <p class="faq-a">That's the platform we've used and had the most success with, so it comes up a lot in the course. But what you learn works just as well on other platforms or with a private arrangement.</p>
+        </details>
+        <details>
+          <summary>Do I need to own a home or have pets myself to be a good sitter? <span class="glyph" aria-hidden="true">+</span></summary>
+          <p class="faq-a">No. You don't need any of that. The course walks you through what to expect, whatever your background.</p>
+        </details>
+        <details>
+          <summary>Is house sitting actually free? <span class="glyph" aria-hidden="true">+</span></summary>
+          <p class="faq-a">Most sits are unpaid. You look after the home and pets, and in exchange, you get a place to stay. Occasionally, a longer sit might ask for a small contribution toward utilities. We cover this honestly in the course.</p>
+        </details>
+        <details>
+          <summary>When does the course launch? <span class="glyph" aria-hidden="true">+</span></summary>
+          <p class="faq-a">We're finishing it up now. Waitlist members will hear first, and they're the only ones who get the discount.</p>
+        </details>
+        <details>
+          <summary>What if I join the waitlist and change my mind? <span class="glyph" aria-hidden="true">+</span></summary>
+          <p class="faq-a">That's completely fine. Joining is free, and you can unsubscribe whenever you like.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA — dark bookend -->
+  <section class="bg-ink final-cta">
+    <div class="wrap">
+      <h2>Your First House Sit Starts With One Step</h2>
+      <p class="sub">If you've been curious about house sitting but weren't sure where to begin, this is a good place to start. Join the waitlist now, and we'll let you know the moment the course is ready, along with your discount.</p>
+      <a href="#waitlist" class="btn">Join the Waitlist</a>
+      <p class="final-line">Free to join · Discount for waitlist members · Launching soon</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="assets/images/logo-transparent.png" width="1254" height="1254" loading="lazy" alt="Learn How to House Sit logo">
+    <p class="fine">© 2026 Learn How to House Sit, a House Sit Hub course. Built from 22 real house sits and 23 years of training experience.</p>
+  </div>
+</footer>
+
+<script>
+  // Reveal-on-scroll
+  const revealTargets = document.querySelectorAll('.section-head, .problem-grid > *, .problem-list li, .benefit, .why-grid > *, .for-list li, .faq details, .cta-band > .wrap > *, .final-cta > .wrap > *');
+  revealTargets.forEach((el) => el.classList.add('reveal'));
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting){
+          setTimeout(() => entry.target.classList.add('in'), i * 60);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealTargets.forEach((el) => io.observe(el));
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.hero-content .reveal, .hero .stat-bar').forEach((el) => el.classList.add('in'));
+    });
+  } else {
+    revealTargets.forEach((el) => el.classList.add('in'));
+    document.querySelectorAll('.hero-content .reveal, .hero .stat-bar').forEach((el) => el.classList.add('in'));
+  }
+
+  // Sticky header: solid once scrolled past hero, plus CTA reveal
+  const header = document.getElementById('siteHeader');
+  const headerCta = document.getElementById('headerCta');
+  const heroSection = document.querySelector('.hero');
+  const headerObserver = new IntersectionObserver(([entry]) => {
+    const scrolledPast = !entry.isIntersecting;
+    headerCta.classList.toggle('show', scrolledPast);
+    header.classList.toggle('scrolled', scrolledPast);
+  }, { threshold: 0, rootMargin: '-72px 0px 0px 0px' });
+  headerObserver.observe(heroSection);
+
+  // Waitlist form: placeholder submit handler (swap action for Google Form / mailto / ESP later)
+  const form = document.getElementById('waitlistForm');
+  const successMsg = document.getElementById('successMsg');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    // TODO: replace with real submission — e.g. a Google Form action URL,
+    // a mailto: fallback, or an email service provider endpoint.
+    form.style.display = 'none';
+    successMsg.classList.add('show');
+  });
+</script>
+
+</body>
+</html>
