@@ -662,8 +662,9 @@
             <label for="email">Email address</label>
             <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="you@email.com" required>
           </div>
-          <button type="submit" class="btn">Save My Spot on the Waitlist</button>
+          <button type="submit" class="btn" id="waitlistSubmit">Save My Spot on the Waitlist</button>
           <p class="form-note">We won't spam you. Just a few updates and your discount code when we launch.</p>
+          <p class="form-note" id="formError" style="display:none; color:#B3261E; font-weight:600;">Something went wrong submitting the form. Please try again in a moment.</p>
         </form>
 
         <div class="success-msg" id="successMsg" role="status" aria-live="polite">
@@ -762,15 +763,54 @@
   }, { threshold: 0, rootMargin: '-72px 0px 0px 0px' });
   headerObserver.observe(heroSection);
 
-  // Waitlist form: placeholder submit handler (swap action for Google Form / mailto / ESP later)
+  // Waitlist form: submits to HubSpot's Forms Submission API (no backend needed).
+  const HUBSPOT_PORTAL_ID = '147296450';
+  const HUBSPOT_FORM_GUID = '6d0eb107-64be-4503-b460-87ef9a94470c';
+
   const form = document.getElementById('waitlistForm');
   const successMsg = document.getElementById('successMsg');
-  form.addEventListener('submit', function(e){
+  const submitBtn = document.getElementById('waitlistSubmit');
+  const errorMsg = document.getElementById('formError');
+
+  form.addEventListener('submit', async function(e){
     e.preventDefault();
-    // TODO: replace with real submission — e.g. a Google Form action URL,
-    // a mailto: fallback, or an email service provider endpoint.
-    form.style.display = 'none';
-    successMsg.classList.add('show');
+    errorMsg.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Saving your spot…';
+
+    const nameValue = document.getElementById('name').value.trim();
+    const emailValue = document.getElementById('email').value.trim();
+
+    const payload = {
+      fields: [
+        { name: 'firstname', value: nameValue },
+        { name: 'email', value: emailValue }
+      ],
+      context: {
+        pageUri: window.location.href,
+        pageName: document.title
+      }
+    };
+
+    try {
+      const res = await fetch(
+        `https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_GUID}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }
+      );
+
+      if (!res.ok) throw new Error('HubSpot submission failed: ' + res.status);
+
+      form.style.display = 'none';
+      successMsg.classList.add('show');
+    } catch (err) {
+      errorMsg.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Save My Spot on the Waitlist';
+    }
   });
 </script>
 
