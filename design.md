@@ -17,27 +17,30 @@ Sources consulted: [15 Kajabi Landing Page Examples](https://supplygem.com/kajab
 
 ## 1. Aesthetic direction
 
-**Editorial travel diary meets a proven course-launch structure.** The brand mark is a bold, confident, slightly playful wordmark (red "LEARN" stacked over black "HOW" over a light "To House Sit"). The photography is warm, lived-in and real: a real kitchen, a real kid playing on the floor, a real stone house in Belgium. The page keeps that editorial warmth in its typography and photo treatment, but borrows the color-blocked, single-CTA, credibility-forward structure that recurs across high-converting Kajabi pages, so it reads as a well-designed travel magazine spread with the bones of a page that's built to convert.
+**Editorial travel diary meets a proven course-launch structure.** The brand mark is a simple house-outline icon in a rounded square badge, set next to the "House Sit Hub" wordmark — no paw print, no third color, just a clean line-art house. The photography is warm, lived-in and real: a real kitchen, a real kid playing on the floor, a real stone house in Belgium. The page keeps that editorial warmth in its typography and photo treatment, but borrows the color-blocked, single-CTA, credibility-forward structure that recurs across high-converting Kajabi pages, so it reads as a well-designed travel magazine spread with the bones of a page that's built to convert.
 
 Things this page deliberately avoids: purple gradients, glassy card shadows, generic rounded SaaS buttons, stock icons, Inter/Roboto-style default type, and long unbroken stretches of plain white background.
 
+**Note (2026 rebrand):** an earlier pass of this document described a red/black wordmark ("LEARN" stacked over "HOW") that was never actually shipped — it didn't match the live code. This section now documents what's actually implemented, updated to the warm-and-adventurous palette below.
+
 ## 2. Color palette
 
-Sampled directly from the source logo file.
+Warm, sun-baked travel tones rather than the flash-sale red the site briefly considered. Terracotta is reserved for calls to action only; teal carries the brand identity (logo badge, headings, dark sections, hover states) so the CTA color keeps a single, unambiguous meaning.
 
 | Token | Hex | Use |
 |---|---|---|
-| `--color-red` | `#E6321C` | Primary brand red — "LEARN," CTA buttons, links, accents |
-| `--color-red-dark` | `#C22815` | Hover/active state for red elements |
-| `--color-ink` | `#171512` | Near-black — body copy, "HOW," headlines |
-| `--color-paper` | `#FBF7F0` | Warm off-white page background (not stark white) |
-| `--color-paper-dim` | `#F3ECE0` | Section background alternation, card fills |
-| `--color-line` | `#E7DDCB` | Hairline borders, dividers |
-| `--color-clay` | `#B9855A` | Warm wood/terracotta accent, pulled from the kitchen counter + house roof tiles |
-| `--color-sage` | `#5C6B4F` | Muted green accent, pulled from the garden/foliage photos |
-| `--color-cream-text` | `#FBF7F0` | Text on dark/red/photo surfaces |
+| `--color-terracotta` | `#D9622B` | CTA buttons, links, small accent dots — action color only |
+| `--color-terracotta-hover` | `#B84F20` | Hover/active state for terracotta elements |
+| `--color-teal` | `#1F4B4A` | Logo badge, headings ("ink-900" role), dark section backgrounds, hover states |
+| `--color-teal-card` | `#1B3E38` | Card fills inside dark teal sections |
+| `--color-ink` | `#241A14` | Body copy on light backgrounds |
+| `--color-paper` | `#FBF1E4` | Warm off-white page background (not stark white) |
+| `--color-paper-dim` | `#F3E4CF` | Section background alternation, hover tints, card fills |
+| `--color-line` | `#E8CDA8` | Hairline borders, dividers |
+| `--color-gold` | `#F6D9A0` | Sparing accent — gradient highlight text, light callout backgrounds |
+| `--color-cream-text` | `#FBF1E4` | Text on dark/terracotta/photo surfaces |
 
-Red and ink do the heavy lifting; clay and sage are used sparingly as underlines, icon fills and tags, never as large fields.
+Terracotta and teal do the heavy lifting; gold is used sparingly and never as a CTA color.
 
 ## 3. Typography
 
@@ -64,7 +67,7 @@ Using `clamp()` instead of a couple of fixed media-query sizes means there's no 
 - Max content width: 1180px; fluid section padding via `clamp(56px, 9vw, 104px)`.
 - **Hero is now full-bleed**: the house-exterior photo fills the entire viewport height (min 92vh) behind a dark ink-to-red gradient overlay, with left-aligned white/cream text on top. `object-position: center 78%` keeps the crop below the small logo watermark baked into the original photo, so it isn't duplicated against the header's own logo.
 - **A floating stat bar** ("22 house sits · 23 years · 9 weeks · 4+ countries") sits on a paper-colored card that overlaps the bottom edge of the hero by 50% of its own height — a bridge element that surfaces credibility before the fold ends, rather than burying it lower on the page.
-- **Sections now alternate four backgrounds**, not two: `--color-paper`, `--color-paper-dim`, `--color-ink` (dark, cream text — used once for the "problem" section and once for the closing band, bookending the page with the hero's dark tone), and `--color-red` (used for the mid-page repeat CTA and the waitlist form). This removes any long run of plain white and gives the page clear visual "stops."
+- **Sections now alternate four backgrounds**, not two: `--color-paper`, `--color-paper-dim`, `--color-teal` (dark, cream text — used once for the "problem" section and once for the closing band, bookending the page with the hero's dark tone), and `--color-terracotta` (used for the mid-page repeat CTA). This removes any long run of plain white and gives the page clear visual "stops."
 - Framed photos (course intro, why-we-made-this) keep the slight rotation (±2°) and soft ink-colored drop shadow from the original polaroid treatment, alternating which side of the two-column grid they sit on so the page doesn't feel like it's repeating a template.
 - The primary CTA button copy and destination (`#waitlist`) repeats four times: hero, mid-page red band, waitlist section itself, and the closing dark band — consistent with the "one focused action, repeated" pattern from the research.
 - A small pill-shaped urgency badge ("Early-bird pricing for waitlist members only") sits above the waitlist form heading to add urgency without a countdown timer, since there's no fixed launch date yet to count down to honestly.
@@ -79,7 +82,7 @@ Three photos are used as-is (already branded with the logo in the original Faceb
 
 Each photo appears exactly once, so "Who this is for" stays a clean, image-free centered list rather than reusing a photo a second time.
 
-The standalone wordmark (`assets/images/logo-transparent.png`, background removed) is used in the site header (rendered white via CSS filter over the dark hero, switching to full color once the header goes solid on scroll) and the footer (also rendered white against the dark ink footer).
+The logo is not the standalone `assets/images/logo-transparent.png` file — that asset isn't referenced anywhere in the shipped page. The actual mark is an inline SVG house-outline icon in a rounded square badge, paired with the "House Sit Hub" wordmark in Montserrat. It appears twice: in the header (`w-10 h-10` badge, teal fill, dark text) and in the footer (`w-8 h-8` badge, white/10 fill against the dark teal footer background), both using the identical house path so the mark stays consistent at any size.
 
 ## 6. Motion
 
@@ -88,7 +91,7 @@ Minimal and purposeful, CSS-only:
 - One staggered fade/rise-in on page load for the hero eyebrow → headline → subhead → CTA (120ms stagger).
 - Photo stack images ease into their rotated resting position on load (translateY + rotate).
 - Section headers and cards fade/rise in on scroll via `IntersectionObserver`, staggered by ~80ms per sibling.
-- Buttons: subtle scale (1.02) and shadow lift on hover, red darkens to `--color-red-dark`.
+- Buttons: subtle scale (1.02) and shadow lift on hover, terracotta darkens to `--color-terracotta-hover`.
 - No parallax, no auto-playing carousels, no scroll-jacking — the content and photography carry the page.
 
 ## 7. Components
@@ -103,8 +106,8 @@ Minimal and purposeful, CSS-only:
 
 ## 8. Accessibility
 
-- Body text contrast: ink (#171512) on paper (#FBF7F0) exceeds WCAG AA at all sizes.
-- Red CTA text is cream (#FBF7F0) on red (#E6321C), which passes AA for large/bold button text.
+- Body text contrast: ink (#241A14) on paper (#FBF1E4) exceeds WCAG AA at all sizes.
+- Terracotta CTA text is cream (#FBF1E4) on terracotta (#D9622B), roughly 3.3:1, which passes AA for large/bold button text but would not pass for small body text — kept to buttons and short labels only.
 - All interactive elements are real `<button>`/`<a>`/`<summary>` elements, keyboard-focusable with a visible focus ring (2px red offset outline).
 - Images carry descriptive `alt` text; decorative rotation/shadow is CSS-only and doesn't affect reading order.
 - Form fields have associated `<label>` elements, plus `autocomplete` and `inputmode` attributes so mobile keyboards and browser autofill work correctly (fewer taps to complete the form).
