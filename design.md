@@ -37,7 +37,7 @@ Warm, sun-baked travel tones rather than the flash-sale red the site briefly con
 | `--color-paper` | `#FBF1E4` | Warm off-white page background (not stark white) |
 | `--color-paper-dim` | `#F3E4CF` | Section background alternation, hover tints, card fills |
 | `--color-line` | `#E8CDA8` | Hairline borders, dividers |
-| `--color-gold` | `#F6D9A0` | Sparing accent — gradient highlight text, light callout backgrounds |
+| `--color-gold` | `#E8A33D` | Sparing accent — gradient highlight text, small tags/badges (never a large field) |
 | `--color-cream-text` | `#FBF1E4` | Text on dark/terracotta/photo surfaces |
 
 Terracotta and teal do the heavy lifting; gold is used sparingly and never as a CTA color.
