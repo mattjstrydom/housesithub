@@ -620,6 +620,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        window.addEventListener('scroll', () => {
+            if (!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+        }, { passive: true });
 
         document.querySelectorAll('.faq-toggle').forEach(button => {
             button.addEventListener('click', () => {
