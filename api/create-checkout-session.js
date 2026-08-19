@@ -42,10 +42,7 @@ module.exports = async function handler(req, res) {
         {
           price_data: {
             currency: 'usd',
-            product_data: {
-              name: 'Learn How to House Sit',
-              description: 'Lifetime access to all 5 modules, 29 lessons, checklists and templates, plus a free 30 minute 1-on-1 call.',
-            },
+            product: 'prod_V1CyHodqbhMbey',
             unit_amount: 6700,
           },
           quantity: 1,
