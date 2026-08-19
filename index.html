@@ -417,7 +417,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <li class="flex gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-terracotta shrink-0"><path d="M20 6 9 17l-5-5"></path></svg> All 5 modules, 29 lessons</li>
                             <li class="flex gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-terracotta shrink-0"><path d="M20 6 9 17l-5-5"></path></svg> All checklists &amp; templates included</li>
                         </ul>
-                        <a href="https://buy.stripe.com/fZu28q5S19pM1AFdJPafS07?prefilled_promo_code=EarlyBird" target="_blank" rel="noopener" class="w-full inline-flex items-center justify-center py-3 px-4 bg-terracotta text-white font-medium rounded-xl hover:bg-terracotta-hover transition-colors shadow-lg shadow-terracotta/25">Claim My Spot at $47</a>
+                        <button id="checkout-btn" class="w-full inline-flex items-center justify-center py-3 px-4 bg-terracotta text-white font-medium rounded-xl hover:bg-terracotta-hover transition-colors shadow-lg shadow-terracotta/25 disabled:opacity-70 disabled:cursor-not-allowed">Claim My Spot at $47</button>
+                        <p id="checkout-error" class="text-center text-xs text-red-500 mt-2 hidden">Something went wrong. Please try again.</p>
                         <p class="text-center text-xs text-slate-400 mt-3">7-day money-back guarantee. No questions asked.</p>
                     </div>
                     <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm hover:shadow-lg transition-shadow">
@@ -630,6 +631,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 mobileMenu.classList.add('hidden');
             }
         }, { passive: true });
+
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const checkoutError = document.getElementById('checkout-error');
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', async () => {
+                checkoutBtn.disabled = true;
+                checkoutBtn.textContent = 'Redirecting to checkout…';
+                checkoutError.classList.add('hidden');
+                try {
+                    const res = await fetch('/api/create-checkout-session', { method: 'POST' });
+                    const data = await res.json();
+                    if (!res.ok || !data.url) {
+                        throw new Error(data.error || 'Checkout failed');
+                    }
+                    window.location.href = data.url;
+                } catch (err) {
+                    console.error(err);
+                    checkoutError.classList.remove('hidden');
+                    checkoutBtn.disabled = false;
+                    checkoutBtn.textContent = 'Claim My Spot at $47';
+                }
+            });
+        }
 
         document.querySelectorAll('.faq-toggle').forEach(button => {
             button.addEventListener('click', () => {
