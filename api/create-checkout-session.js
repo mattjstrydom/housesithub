@@ -35,7 +35,7 @@ module.exports = async function handler(req, res) {
       console.error('Error looking up EARLYBIRD promotion code:', promoErr);
     }
 
-    const session = await stripe.checkout.sessions.create({
+    const sessionParams = {
       mode: 'payment',
       payment_method_types: ['card'],
       line_items: [
@@ -48,13 +48,19 @@ module.exports = async function handler(req, res) {
           quantity: 1,
         },
       ],
-      // If the EARLYBIRD lookup above failed for any reason, still let the
-      // customer type a code manually instead of silently charging $67.
-      allow_promotion_codes: !discounts,
-      discounts,
       success_url: `${origin}/thank-you.html?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/#pricing`,
-    });
+    };
+
+    // Stripe rejects the request if both allow_promotion_codes and discounts
+    // are present, even if one of them is false/undefined. Only ever set one.
+    if (discounts) {
+      sessionParams.discounts = discounts;
+    } else {
+      sessionParams.allow_promotion_codes = true;
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     return res.status(200).json({ url: session.url });
   } catch (err) {
