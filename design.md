@@ -21,9 +21,31 @@ Sources consulted: [15 Kajabi Landing Page Examples](https://supplygem.com/kajab
 
 Things this page deliberately avoids: purple gradients, glassy card shadows, generic rounded SaaS buttons, stock icons, Inter/Roboto-style default type, and long unbroken stretches of plain white background.
 
-**Note (2026 rebrand):** an earlier pass of this document described a red/black wordmark ("LEARN" stacked over "HOW") that was never actually shipped — it didn't match the live code. This section now documents what's actually implemented, updated to the warm-and-adventurous palette below.
+**Note (2026 rebrand, v2 — "Global Trust & Golden Hour"):** the terracotta/teal warm-travel palette described below this note is retired. The page now runs a premium, trust-forward palette (deep indigo + warm sand + sunset gold) with a serif/sans typographic split, documented in the tables immediately below. The class names in the shipped code (`ink`, `ink-900`, `terracotta`, `slate-50`, `slate-600`, `font-display`) are unchanged from the earlier pass — only the hex values behind them (and, for headlines, the font-family) moved — plus a handful of new explicit tokens (`sand`, `indigo`, `gold`, `slate-plain`, `font-serif`) for new markup. The section below the old note (color palette / typography) documents the historical terracotta/teal version for reference; treat the table immediately following this note as authoritative.
 
-## 2. Color palette
+## 2. Color palette — current (Global Trust & Golden Hour)
+
+Trust and authority from a deep indigo, warmth from a sand background, energy from a single sunset-gold accent reserved for calls to action.
+
+| Token | Hex | Tailwind class(es) | Use |
+|---|---|---|---|
+| Deep Indigo | `#1A2942` | `bg-ink`, `bg-ink-900`, `text-ink-900`, `bg-indigo`, `text-indigo` | Primary/header color: nav wordmark, dark section backgrounds (notebook, footer), H2 color on light sections |
+| Warm Sand | `#F7F5F0` | `bg-sand`, `bg-slate-50` | Page canvas — replaces the old stark-white sections (hero-adjacent sections, nav, pricing/carousel backgrounds) |
+| Sunset Gold | `#F2A900` | `bg-terracotta`, `text-terracotta`, `bg-gold`, `text-gold` | CTA buttons and accents only — hero button, pricing button, italic hero accent, "Behind the Hub" eyebrow, progress-bar fill |
+| Slate | `#334155` | `text-slate-600`, `text-slate-plain` | Primary body copy on light backgrounds |
+| Pure white | `#FFFFFF` | `bg-white` | Reserved for elevated cards/surfaces that need to pop off the sand canvas (e.g. the "after launch" pricing card, icon tiles) — never used as the page's base background |
+
+Class names carried over from the prior palette (`ink`, `terracotta`, `slate-50`, `slate-600`) keep their original semantic role (header/authority, CTA, soft section background, body text respectively) — only their color values changed, so no markup rewrite was needed to apply the new palette globally.
+
+## 3. Typography — current
+
+Three typefaces, all loaded from Google Fonts:
+
+- **Major headlines (H1, H2): "Playfair Display"** (weights 600/700, italic available), applied via a new `.font-serif` utility. Reserved for the page's largest headline moments — the hero H1 and every section H2 — to give the page an editorial, premium feel. Not applied to H3s, card titles, numbers, or labels, which stay on the sans-serif display face below so small type stays crisp and legible.
+- **Secondary display / numbers / card titles: "Montserrat"** (weights 500–700), via the existing `.font-display` utility — unchanged from the prior pass.
+- **Body / UI: "Inter"** (weights 300–600), via `.font-sans` — unchanged from the prior pass.
+
+## 2 (historical) / 3 (historical). Prior "warm travel" palette & type
 
 Warm, sun-baked travel tones rather than the flash-sale red the site briefly considered. Terracotta is reserved for calls to action only; teal carries the brand identity (logo badge, headings, dark sections, hover states) so the CTA color keeps a single, unambiguous meaning.
 
@@ -41,8 +63,6 @@ Warm, sun-baked travel tones rather than the flash-sale red the site briefly con
 | `--color-cream-text` | `#FBF1E4` | Text on dark/terracotta/photo surfaces |
 
 Terracotta and teal do the heavy lifting; gold is used sparingly and never as a CTA color.
-
-## 3. Typography
 
 Two typefaces, both loaded from Google Fonts:
 
@@ -103,6 +123,8 @@ Minimal and purposeful, CSS-only:
 - **Repeat CTA band**: a short, full-bleed red section with its own heading and the same button copy, inserted mid-page so the offer is never more than one scroll away.
 - **FAQ**: native `<details>/<summary>` accordion, no JS required, red plus/minus glyph rotates via CSS. Expand with conversion-focused questions (YouTube, who it's for/not for, refund policy) alongside the honest operational FAQs.
 - **Pricing section**: the page's primary conversion block. A two-card layout — a dark, lifted "Limited launch price" card at $47 with strikethrough $67, the "pays for itself" value line, named founder-call bonus, and a labeled 30-day Ready-to-Apply guarantee beside the buy button; plus a softer "After launch" card at $67 for context. CTA: "Claim my spot — $47" → Stripe checkout session.
+- **Scarcity progress bar** (added alongside the "X of 20 spots left" pill): a thin gold-fill `.progress-track`/`.progress-fill` bar plus a "`{spotsClaimed}` / 20 spots claimed" label inside the launch-price card. `spotsClaimed` is currently derived client-side from the same `SPOTS_LEFT` constant used elsewhere on the page (see the inline script's `renderScarcity()`); the constant and the `{spotsClaimed}` comment mark where a live Stripe-backed count should be substituted once that endpoint exists. Deliberately static/live-updating rather than an animated countdown, to keep the urgency honest rather than gimmicky.
+- **"Meet the Family" section** (between "From Our Own Notebook" and the photo carousel): a two-column split — `assets/images/strydom-family.webp` (the same Netherlands bridge photo used in the carousel) on one side, family origin story on the other, with a "Behind the Hub" gold eyebrow, a serif indigo H2, and an italic serif "See you out there." sign-off. Stacks image-first on mobile.
 
 ## 8. Accessibility
 
