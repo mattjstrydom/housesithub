@@ -616,11 +616,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 mobileMenu.classList.add('hidden');
             });
         });
-        window.addEventListener('scroll', () => {
-            if (!mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.add('hidden');
-            }
-        }, { passive: true });
 
         const checkoutBtn = document.getElementById('checkout-btn');
         const checkoutError = document.getElementById('checkout-error');
@@ -663,7 +658,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             const nav = document.getElementById('navbar');
             if (window.scrollY > 20) nav.classList.add('shadow-sm');
             else nav.classList.remove('shadow-sm');
-        });
+            if (!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+        }, { passive: true });
 
         document.addEventListener('DOMContentLoaded', () => {
           // Live scarcity counter — single source of truth.
