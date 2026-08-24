@@ -141,6 +141,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p class="mt-4 text-xl text-slate-200 max-w-2xl mx-auto mb-10 font-light">
                     A practical course that takes you from "what's house sitting?" to a profile and application that actually get chosen — built from our family's 22 sits across 6+ countries.
                 </p>
+                <p class="text-terracotta font-semibold text-lg mt-4" id="hero-scarcity">19 of 20 spots left</p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="#pricing" class="bg-terracotta hover:bg-terracotta-hover text-white px-8 py-4 rounded-xl text-lg font-medium transition-all shadow-xl shadow-terracotta/20 flex items-center justify-center">
                         Claim my spot — $47 launch price
@@ -396,7 +397,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
                 <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
                     <div class="bg-ink-900 rounded-2xl p-8 border border-ink-900 shadow-2xl relative transform md:-translate-y-4">
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-terracotta text-white px-3 py-1 rounded-full text-xs font-semibold tracking-wide" id="pricing-scarcity-badge">First 20 · $47</div>
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-terracotta text-white px-3 py-1 rounded-full text-xs font-semibold tracking-wide" id="pricing-scarcity-badge">19 of 20 spots left</div>
                         <h3 class="text-xl font-semibold text-white font-display">Limited Launch Price</h3>
                         <p class="text-slate-300 mt-2 text-sm">For the first 20 people who join</p>
                         <div class="mt-6 mb-4 flex items-baseline gap-3">
@@ -519,7 +520,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <section class="py-20 bg-terracotta text-white text-center px-4">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl md:text-5xl font-semibold tracking-tight mb-6 font-display">Your first house sit starts with one step</h2>
-                <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto" id="final-scarcity-text">If you've ever wondered what it's actually like to stay somewhere — not just visit — start here. Launch pricing is $47 for the first 20 people; then $67.</p>
+                <p class="text-base md:text-lg leading-relaxed text-slate-300 max-w-none" id="final-scarcity-text">If you've ever wondered what it's actually like to stay somewhere — not just visit — start here.<br><br><strong>19 of 20 spots left.</strong> Launch pricing is $47 for the first 20 people; then $67.</p>
                 <a href="#pricing" class="inline-flex bg-white text-terracotta hover:bg-slate-50 px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-xl">
                     Claim my spot — $47
                 </a>
@@ -631,7 +632,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Scarcity now rendered as static copy — no live counter.
+          // Live scarcity counter — single source of truth.
+          // To update when spots sell: change SPOTS_LEFT below and redeploy.
+          // Long-term: replace this constant with a server-rendered value
+          // (env var or Stripe-backed count) so a sale doesn't require a deploy.
+          const SPOTS_LEFT = 19;
+          const TOTAL_SPOTS = 20;
+
+          function renderScarcity() {
+            const pricingBadge = document.getElementById('pricing-scarcity-badge');
+            const finalScarcityText = document.getElementById('final-scarcity-text');
+            const heroScarcity = document.getElementById('hero-scarcity');
+
+            const scarcityText = `${SPOTS_LEFT} of ${TOTAL_SPOTS} spots left`;
+
+            if (pricingBadge) pricingBadge.textContent = scarcityText;
+            if (finalScarcityText) {
+              finalScarcityText.innerHTML =
+                'If you've ever wondered what it's actually like to stay somewhere — not just visit — start here.<br><br><strong>' +
+                scarcityText +
+                '.</strong> Launch pricing is $47 for the first 20 people; then $67.';
+            }
+            if (heroScarcity) heroScarcity.textContent = scarcityText;
+          }
+
+          renderScarcity();
         });
 
         // Coverflow photo carousel (How It Works section)
