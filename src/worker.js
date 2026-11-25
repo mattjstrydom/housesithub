@@ -5,6 +5,21 @@ function json(status, body, extra) {
   });
 }
 
+const COURSE_PRODUCT_ID = "prod_UxeARD5xcwcojV";
+
+async function findActivePromo(secret, code) {
+  const promoRes = await fetch(
+    "https://api.stripe.com/v1/promotion_codes?code=" + encodeURIComponent(code) + "&active=true&limit=1",
+    { headers: { Authorization: "Bearer " + secret } },
+  );
+  if (!promoRes.ok) return null;
+  const promo = await promoRes.json();
+  if (promo.data && promo.data.length > 0) {
+    return promo.data[0].id;
+  }
+  return null;
+}
+
 async function checkout(request, env) {
   if (request.method !== "POST") {
     return json(405, { error: "Method not allowed" }, { allow: "POST" });
@@ -14,29 +29,22 @@ async function checkout(request, env) {
     return json(500, { error: "Payment is not configured yet. Please try again later." });
   }
   const origin = request.headers.get("origin") || "https://www.housesithub.com";
-  const product = env.STRIPE_PRODUCT_ID;
+  const product = env.STRIPE_PRODUCT_ID || COURSE_PRODUCT_ID;
   const params = new URLSearchParams();
   params.set("mode", "payment");
   params.append("payment_method_types[0]", "card");
   params.set("line_items[0][quantity]", "1");
   params.set("line_items[0][price_data][currency]", "usd");
   params.set("line_items[0][price_data][unit_amount]", "6700");
-  if (product) params.set("line_items[0][price_data][product]", product);
-  else params.set("line_items[0][price_data][product_data][name]", "Houses It Hub");
+  params.set("line_items[0][price_data][product]", product);
   params.set("success_url", `${origin}/thank-you.html?session_id={CHECKOUT_SESSION_ID}`);
   params.set("cancel_url", `${origin}/#pricing`);
   try {
-    const promoRes = await fetch(
-      "https://api.stripe.com/v1/promotion_codes?code=EARLYBIRD&active=true&limit=1",
-      { headers: { Authorization: "Bearer " + secret } },
-    );
-    if (promoRes.ok) {
-      const promo = await promoRes.json();
-      if (promo.data && promo.data.length > 0) {
-        params.set("discounts[0][promotion_code]", promo.data[0].id);
-      } else {
-        params.set("allow_promotion_codes", "true");
-      }
+    const promoId =
+      (await findActivePromo(secret, "BLACKFRIDAY")) ||
+      (await findActivePromo(secret, "EARLYBIRD"));
+    if (promoId) {
+      params.set("discounts[0][promotion_code]", promoId);
     } else {
       params.set("allow_promotion_codes", "true");
     }

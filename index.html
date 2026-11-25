@@ -72,6 +72,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     animation: spin 1s linear infinite;
   }
   @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  #black-friday, #pricing, #benefits, #curriculum, #faq {
+    scroll-margin-top: 6rem;
+  }
 </style>
 </head>
 <body class="bg-sand text-slate-600 font-sans antialiased selection:bg-terracotta selection:text-white">
@@ -97,8 +100,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <a href="#faq" class="text-base font-medium text-slate-600 hover:text-ink transition-colors">FAQ</a>
                 </nav>
                 <div class="hidden md:flex items-center space-x-4">
-                    <a href="#pricing" class="bg-terracotta hover:bg-terracotta-hover text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-all shadow-lg shadow-terracotta/20">
-                        Claim My Spot at $47
+                    <a href="#black-friday" class="bg-terracotta hover:bg-terracotta-hover text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-all shadow-lg shadow-terracotta/20" data-bf-cta data-launch-href="#pricing" data-launch-label="Claim My Spot at $47">
+                        Get it for $10
                     </a>
                 </div>
                 <div class="md:hidden flex items-center">
@@ -114,8 +117,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <a href="#curriculum" class="block px-3 py-3 text-lg font-medium text-slate-700 rounded-md hover:bg-slate-50">What's Inside</a>
                 <a href="#pricing" class="block px-3 py-3 text-lg font-medium text-slate-700 rounded-md hover:bg-slate-50">Pricing</a>
                 <a href="#faq" class="block px-3 py-3 text-lg font-medium text-slate-700 rounded-md hover:bg-slate-50">FAQ</a>
-                <a href="#pricing" class="block w-full mt-4 bg-terracotta text-white px-5 py-3 rounded-lg text-lg font-medium text-center">
-                    Claim My Spot at $47
+                <a href="#black-friday" class="block w-full mt-4 bg-terracotta text-white px-5 py-3 rounded-lg text-lg font-medium text-center" data-bf-cta data-launch-href="#pricing" data-launch-label="Claim My Spot at $47">
+                    Get it for $10
                 </a>
             </div>
         </div>
@@ -144,10 +147,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p class="mt-4 text-xl text-slate-200 max-w-2xl mx-auto mb-10 font-light">
                     Stop checking into hotels and start settling into communities. Master the art of house sitting, build genuine cultural connections, and travel with purpose.
                 </p>
-                <p class="text-terracotta font-semibold text-lg mt-4" id="hero-scarcity">19 of 20 spots left</p>
+                <p class="text-terracotta font-semibold text-lg mt-4" id="hero-scarcity">Black Friday: $67, now $10 — ends Cyber Monday</p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#pricing" class="bg-terracotta hover:bg-terracotta-hover text-white px-8 py-4 rounded-xl text-lg font-medium transition-all shadow-xl shadow-terracotta/20 flex items-center justify-center">
-                        Join the Launch Cohort
+                    <a href="#black-friday" class="bg-terracotta hover:bg-terracotta-hover text-white px-8 py-4 rounded-xl text-lg font-medium transition-all shadow-xl shadow-terracotta/20 flex items-center justify-center" data-bf-cta data-launch-href="#pricing" data-launch-label="Join the Launch Cohort">
+                        Get the course for $10
                     </a>
                     <a href="#curriculum" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-xl text-lg font-medium transition-all flex items-center justify-center">
                         See what's inside
@@ -175,6 +178,46 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+
+        <!-- BLACK FRIDAY OFFER -->
+        <section id="black-friday" class="py-24 bg-ink-900 text-white relative overflow-hidden">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <span class="text-gold font-medium tracking-wider uppercase text-sm">Black Friday — Cyber Monday</span>
+                <h2 class="mt-3 text-3xl md:text-4xl font-semibold tracking-tight font-serif">
+                    $67, now $10
+                </h2>
+                <p class="mt-4 text-slate-300 text-lg">
+                    The course is $10 for Black Friday, until the end of Cyber Monday, 30 November (US Eastern time).
+                </p>
+                <p class="mt-4 text-slate-300">
+                    5 modules, 29 lessons, lifetime access, checklists and templates — built from 22 real sits in 6+ countries.
+                </p>
+                <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto" id="bf-countdown" aria-live="polite">
+                    <div class="bg-white/10 rounded-xl p-4">
+                        <div class="text-3xl md:text-4xl font-semibold tracking-tight font-display" data-bf-unit="days">0</div>
+                        <div class="text-sm text-slate-300 font-medium mt-1">Days</div>
+                    </div>
+                    <div class="bg-white/10 rounded-xl p-4">
+                        <div class="text-3xl md:text-4xl font-semibold tracking-tight font-display" data-bf-unit="hours">0</div>
+                        <div class="text-sm text-slate-300 font-medium mt-1">Hours</div>
+                    </div>
+                    <div class="bg-white/10 rounded-xl p-4">
+                        <div class="text-3xl md:text-4xl font-semibold tracking-tight font-display" data-bf-unit="minutes">0</div>
+                        <div class="text-sm text-slate-300 font-medium mt-1">Minutes</div>
+                    </div>
+                    <div class="bg-white/10 rounded-xl p-4">
+                        <div class="text-3xl md:text-4xl font-semibold tracking-tight font-display" data-bf-unit="seconds">0</div>
+                        <div class="text-sm text-slate-300 font-medium mt-1">Seconds</div>
+                    </div>
+                </div>
+                <p class="mt-4 text-slate-300 text-sm">Offer ends Cyber Monday, 30 November, at 23:59 US Eastern.</p>
+                <button type="button" id="bf-checkout-btn" class="mt-8 inline-flex items-center justify-center bg-terracotta hover:bg-terracotta-hover text-ink-900 px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-xl shadow-terracotta/20 disabled:opacity-70 disabled:cursor-not-allowed">
+                    Get the course for $10
+                </button>
+                <p id="bf-checkout-error" class="text-center text-xs text-red-500 mt-2 hidden">Something went wrong. Please try again.</p>
             </div>
         </section>
 
@@ -412,18 +455,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <section id="pricing" class="py-24 bg-slate-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16">
-                    <span class="text-terracotta font-medium tracking-wider uppercase text-sm">Limited launch pricing</span>
+                    <span class="text-terracotta font-medium tracking-wider uppercase text-sm" id="pricing-eyebrow">Black Friday offer</span>
                     <h2 class="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-ink-900 font-serif">
                         Ready to actually live somewhere for a while?
                     </h2>
-                    <p class="mt-4 text-slate-600">The launch price is $47 for the first 20 people who join. After that, the course stays the same — the price goes to $67.</p>
+                    <p class="mt-4 text-slate-600" id="pricing-intro">The course is usually $67. This Black Friday it’s $10, until the end of Cyber Monday, 30 November (US Eastern time). <a href="#black-friday" class="text-terracotta font-medium hover:underline">See the Black Friday offer</a>.</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
                     <div class="bg-ink-900 rounded-2xl p-8 border border-ink-900 shadow-2xl relative transform md:-translate-y-4">
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-terracotta text-white px-3 py-1 rounded-full text-xs font-semibold tracking-wide" id="pricing-scarcity-badge">19 of 20 spots left</div>
-                        <h3 class="text-xl font-semibold text-white font-display">Limited Launch Price</h3>
-                        <p class="text-slate-300 mt-2 text-sm">For the first 20 people who join</p>
-                        <div class="mt-5">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-terracotta text-white px-3 py-1 rounded-full text-xs font-semibold tracking-wide" id="pricing-scarcity-badge">Black Friday</div>
+                        <h3 class="text-xl font-semibold text-white font-display" id="pricing-card-title">Black Friday Price</h3>
+                        <p class="text-slate-300 mt-2 text-sm" id="pricing-card-sub">Until Cyber Monday, 30 November</p>
+                        <div class="mt-5 hidden" id="pricing-progress">
                             <div class="flex items-center justify-between text-xs font-medium text-slate-300 mb-1.5">
                                 <span id="pricing-progress-label">14 / 20 spots claimed</span>
                                 <span class="text-gold" id="pricing-progress-percent">70%</span>
@@ -435,7 +478,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                         <div class="mt-6 mb-4 flex items-baseline gap-3">
                             <span class="text-2xl font-medium text-slate-400 line-through">$67</span>
-                            <span class="text-4xl font-bold text-white">$47</span>
+                            <span class="text-4xl font-bold text-white" id="pricing-now-price">$10</span>
                         </div>
                         <p class="text-sm text-slate-300 mb-6">This course pays for itself with your first house sit. A single week in a hotel costs more than this course.</p>
                         <ul class="space-y-4 mb-6 text-slate-300 text-sm">
@@ -445,7 +488,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <li class="flex gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-terracotta shrink-0"><path d="M20 6 9 17l-5-5"></path></svg> Founder call: a free 30-minute 1:1 with us after you buy — personal guidance from the people who built the course</li>
                             <li class="flex gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-terracotta shrink-0"><path d="M20 6 9 17l-5-5"></path></svg> 30-day guarantee — a full refund if you finish the course and still don't feel ready to apply</li>
                         </ul>
-                        <button id="checkout-btn" class="w-full inline-flex items-center justify-center py-3 px-4 bg-terracotta text-white font-medium rounded-xl hover:bg-terracotta-hover transition-colors shadow-lg shadow-terracotta/25 disabled:opacity-70 disabled:cursor-not-allowed">Claim my spot — $47</button>
+                        <button id="checkout-btn" class="w-full inline-flex items-center justify-center py-3 px-4 bg-terracotta text-white font-medium rounded-xl hover:bg-terracotta-hover transition-colors shadow-lg shadow-terracotta/25 disabled:opacity-70 disabled:cursor-not-allowed">Get the course for $10</button>
                         <p id="checkout-error" class="text-center text-xs text-red-500 mt-2 hidden">Something went wrong. Please try again.</p>
                     </div>
                     <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
@@ -554,9 +597,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <section class="py-20 bg-ink-900 text-white text-center px-4">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl md:text-5xl font-semibold tracking-tight mb-6 font-serif">Your first house sit starts with one step</h2>
-                <p class="text-base md:text-lg leading-relaxed text-slate-300 max-w-none" id="final-scarcity-text">If you've ever wondered what it's actually like to stay somewhere — not just visit — start here.<br><br><strong class="text-gold">19 of 20 spots left.</strong> Launch pricing is $47 for the first 20 people; then $67.</p>
-                <a href="#pricing" class="inline-flex bg-terracotta hover:bg-terracotta-hover text-ink-900 px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-xl mt-8">
-                    Claim my spot — $47
+                <p class="text-base md:text-lg leading-relaxed text-slate-300 max-w-none" id="final-scarcity-text">If you've ever wondered what it's actually like to stay somewhere — not just visit — start here.<br><br><strong class="text-gold">$67, now $10.</strong> Black Friday pricing until Cyber Monday, 30 November (US Eastern time).</p>
+                <a href="#black-friday" class="inline-flex bg-terracotta hover:bg-terracotta-hover text-ink-900 px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-xl mt-8" data-bf-cta data-launch-href="#pricing" data-launch-label="Claim my spot — $47">
+                    Get the course for $10
                 </a>
             </div>
         </section>
@@ -617,13 +660,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             });
         });
 
-        const checkoutBtn = document.getElementById('checkout-btn');
-        const checkoutError = document.getElementById('checkout-error');
-        if (checkoutBtn) {
-            checkoutBtn.addEventListener('click', async () => {
-                checkoutBtn.disabled = true;
-                checkoutBtn.textContent = 'Redirecting to checkout…';
-                checkoutError.classList.add('hidden');
+        const BF_ENDS_AT = Date.parse('2026-12-01T04:59:59Z');
+        const LAUNCH_CHECKOUT_LABEL = 'Claim my spot — $47';
+        const BF_CHECKOUT_LABEL = 'Get the course for $10';
+
+        function isBlackFridayActive() {
+            return Date.now() <= BF_ENDS_AT;
+        }
+
+        function bindCheckout(button, errorEl, idleLabel) {
+            if (!button) return;
+            button.addEventListener('click', async () => {
+                button.disabled = true;
+                button.textContent = 'Redirecting to checkout…';
+                if (errorEl) errorEl.classList.add('hidden');
                 try {
                     const res = await fetch('/api/create-checkout-session', { method: 'POST' });
                     const data = await res.json();
@@ -633,11 +683,99 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     window.location.href = data.url;
                 } catch (err) {
                     console.error(err);
-                    checkoutError.classList.remove('hidden');
-                    checkoutBtn.disabled = false;
-                    checkoutBtn.textContent = 'Claim My Spot at $47';
+                    if (errorEl) errorEl.classList.remove('hidden');
+                    button.disabled = false;
+                    button.textContent = typeof idleLabel === 'function' ? idleLabel() : idleLabel;
                 }
             });
+        }
+
+        bindCheckout(
+            document.getElementById('checkout-btn'),
+            document.getElementById('checkout-error'),
+            () => isBlackFridayActive() ? BF_CHECKOUT_LABEL : LAUNCH_CHECKOUT_LABEL
+        );
+        bindCheckout(
+            document.getElementById('bf-checkout-btn'),
+            document.getElementById('bf-checkout-error'),
+            BF_CHECKOUT_LABEL
+        );
+
+        function renderCountdown() {
+            const root = document.getElementById('bf-countdown');
+            if (!root) return false;
+            const remaining = Math.max(0, BF_ENDS_AT - Date.now());
+            const totalSeconds = Math.floor(remaining / 1000);
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            const values = { days, hours, minutes, seconds };
+            root.querySelectorAll('[data-bf-unit]').forEach((el) => {
+                const key = el.getAttribute('data-bf-unit');
+                if (key in values) el.textContent = String(values[key]);
+            });
+            return remaining > 0;
+        }
+
+        function restoreLaunchPricing() {
+            const bfSection = document.getElementById('black-friday');
+            if (bfSection) bfSection.classList.add('hidden');
+
+            document.querySelectorAll('[data-bf-cta]').forEach((el) => {
+                const href = el.getAttribute('data-launch-href');
+                const label = el.getAttribute('data-launch-label');
+                if (href) el.setAttribute('href', href);
+                if (label) el.textContent = label;
+            });
+
+            const eyebrow = document.getElementById('pricing-eyebrow');
+            if (eyebrow) eyebrow.textContent = 'Limited launch pricing';
+
+            const intro = document.getElementById('pricing-intro');
+            if (intro) intro.textContent = 'The launch price is $47 for the first 20 people who join. After that, the course stays the same — the price goes to $67.';
+
+            const cardTitle = document.getElementById('pricing-card-title');
+            if (cardTitle) cardTitle.textContent = 'Limited Launch Price';
+
+            const cardSub = document.getElementById('pricing-card-sub');
+            if (cardSub) cardSub.textContent = 'For the first 20 people who join';
+
+            const nowPrice = document.getElementById('pricing-now-price');
+            if (nowPrice) nowPrice.textContent = '$47';
+
+            const checkoutBtn = document.getElementById('checkout-btn');
+            if (checkoutBtn && !checkoutBtn.disabled) checkoutBtn.textContent = LAUNCH_CHECKOUT_LABEL;
+
+            const progress = document.getElementById('pricing-progress');
+            if (progress) progress.classList.remove('hidden');
+
+            const pricingBadge = document.getElementById('pricing-scarcity-badge');
+            if (pricingBadge) pricingBadge.textContent = '19 of 20 spots left';
+
+            const heroScarcity = document.getElementById('hero-scarcity');
+            if (heroScarcity) heroScarcity.textContent = '19 of 20 spots left';
+
+            const finalScarcityText = document.getElementById('final-scarcity-text');
+            if (finalScarcityText) {
+                finalScarcityText.innerHTML =
+                    "If you've ever wondered what it's actually like to stay somewhere — not just visit — start here.<br><br><strong class=\"text-gold\">19 of 20 spots left.</strong> Launch pricing is $47 for the first 20 people; then $67.";
+            }
+        }
+
+        let bfTimer = null;
+        function startBlackFridayOffer() {
+            if (!isBlackFridayActive()) {
+                restoreLaunchPricing();
+                return;
+            }
+            renderCountdown();
+            bfTimer = setInterval(() => {
+                if (!renderCountdown() || !isBlackFridayActive()) {
+                    clearInterval(bfTimer);
+                    restoreLaunchPricing();
+                }
+            }, 1000);
         }
 
         document.querySelectorAll('.faq-toggle').forEach(button => {
@@ -664,6 +802,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }, { passive: true });
 
         document.addEventListener('DOMContentLoaded', () => {
+          startBlackFridayOffer();
+
           // Live scarcity counter — single source of truth.
           // To update when spots sell: change SPOTS_LEFT below and redeploy.
           // Long-term: replace this constant with a server-rendered value
@@ -687,6 +827,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             const scarcityText = `${SPOTS_LEFT} of ${TOTAL_SPOTS} spots left`;
             const claimedPct = Math.round((spotsClaimed / TOTAL_SPOTS) * 100);
+
+            if (isBlackFridayActive()) return;
 
             if (pricingBadge) pricingBadge.textContent = scarcityText;
             if (finalScarcityText) {
