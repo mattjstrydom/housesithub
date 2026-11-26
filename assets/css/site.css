@@ -446,3 +446,8 @@ h3 { font-size: 1.3rem; letter-spacing: -.015em; line-height: 1.2; }
   .hero-cutout { aspect-ratio: auto; margin: 0 var(--gutter); padding-top: 12px; }
   .hero-cutout img { width: min(100%, 460px); max-width: 100%; }
 }
+
+
+/* ---------- logo: wordmark with a coral paper plane taking off from the last letter ---------- */
+.brand { gap: 2px; font-size: 1.35rem; font-weight: 750; letter-spacing: -.03em; }
+.brand-mark, .footer .brand-mark { width: auto; height: auto; background: none; border-radius: 0; color: var(--accent); order: 2; margin-top: -10px; transform: rotate(0deg); }
