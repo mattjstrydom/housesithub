@@ -6,6 +6,12 @@ function json(status, body, extra) {
 }
 
 const COURSE_PRODUCT_ID = "prod_UxeARD5xcwcojV";
+const BF_ENDS_AT = Date.parse("2026-12-01T04:59:59Z"); // keep in sync with index.html
+
+const SITE_ORIGIN = "https://www.housesithub.com";
+// Cache the promo lookup so each click doesn't cost two Stripe round trips.
+// ponytail: per-isolate cache, 5 min; a code created/disabled in Stripe takes up to 5 min to show.
+let promoCache = { id: null, at: 0 };
 
 async function findActivePromo(secret, code) {
   const promoRes = await fetch(
@@ -28,11 +34,12 @@ async function checkout(request, env) {
   if (!secret) {
     return json(500, { error: "Payment is not configured yet. Please try again later." });
   }
-  const origin = request.headers.get("origin") || "https://www.housesithub.com";
+  // Fixed origin: never build redirect URLs from a client-supplied header.
+  // Localhost/preview origins fall back to the live site's return URLs.
+  const origin = SITE_ORIGIN;
   const product = env.STRIPE_PRODUCT_ID || COURSE_PRODUCT_ID;
   const params = new URLSearchParams();
   params.set("mode", "payment");
-  params.append("payment_method_types[0]", "card");
   params.set("line_items[0][quantity]", "1");
   params.set("line_items[0][price_data][currency]", "usd");
   params.set("line_items[0][price_data][unit_amount]", "6700");
@@ -40,9 +47,16 @@ async function checkout(request, env) {
   params.set("success_url", `${origin}/thank-you.html?session_id={CHECKOUT_SESSION_ID}`);
   params.set("cancel_url", `${origin}/#pricing`);
   try {
-    const promoId =
-      (await findActivePromo(secret, "BLACKFRIDAY")) ||
-      (await findActivePromo(secret, "EARLYBIRD"));
+    if (Date.now() - promoCache.at > 5 * 60 * 1000) {
+      const bf = await findActivePromo(secret, "BLACKFRIDAY");
+      const id = bf || (await findActivePromo(secret, "EARLYBIRD"));
+      if (!bf && Date.now() <= BF_ENDS_AT) {
+        // The page advertises $10 during Black Friday; without this code the buyer sees a higher price.
+        console.error("BLACKFRIDAY promotion code missing or inactive in Stripe; falling back to", id ? "EARLYBIRD" : "full price");
+      }
+      promoCache = { id, at: Date.now() };
+    }
+    const promoId = promoCache.id;
     if (promoId) {
       params.set("discounts[0][promotion_code]", promoId);
     } else {

@@ -5,13 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>You're in! | Learn How to House Sit</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#1F2A1C">
+<meta name="theme-color" content="#1D2A4D">
 <link rel="icon" href="assets/images/favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
+<script>
+  // Purchase event: Stripe's success_url adds ?session_id=cs_..., so only real checkout returns fire it.
+  window.dataLayer = window.dataLayer || [];
+  (function () {
+    var sid = new URLSearchParams(location.search).get('session_id');
+    if (sid && /^cs_/.test(sid)) {
+      var key = 'purchase_sent_' + sid;
+      try { if (sessionStorage.getItem(key)) sid = null; else sessionStorage.setItem(key, '1'); } catch (e) {}
+      if (sid) window.dataLayer.push({ event: 'purchase', transaction_id: sid, currency: 'USD', item_name: 'Learn How to House Sit' });
+    }
+  })();
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WTQ2BRSJ');</script>
+<!-- End Google Tag Manager -->
 </head>
 <body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTQ2BRSJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <header class="nav" id="navbar"><div class="wrap"><div class="nav-row">
 <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span>House Sit Hub</a>
@@ -29,7 +49,7 @@
                 <div class="card"><h2>What happens next</h2>
                     <ul>
                         <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg> Your login details are on their way to your inbox</li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg> You're one of our first 20 — <a href="https://cal.com/housesithub/30min">book your free 30-minute call now</a></li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg> Your free 30-minute founder call is included — <a href="https://cal.com/housesithub/30min">book it now</a></li>
                         <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg> No email after 15 minutes? Check spam, or email us and we'll sort it out</li>
                     </ul>
                 </div>
