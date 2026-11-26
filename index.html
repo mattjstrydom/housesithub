@@ -21,16 +21,16 @@
 <meta property="og:title" content="House Sitting Course for Beginners | House Sit Hub">
 <meta property="og:description" content="Learn how to find, win and complete your first house sit. A self-paced course built from 22 real sits in 6 countries and 23 years of designing training programs.">
 <meta property="og:url" content="https://www.housesithub.com/">
-<meta property="og:image" content="https://www.housesithub.com/assets/images/kitchen.jpg">
-<meta property="og:image:width" content="1254">
-<meta property="og:image:height" content="1254">
+<meta property="og:image" content="https://www.housesithub.com/assets/images/og-black-friday.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="en_US">
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="House Sitting Course for Beginners | House Sit Hub">
 <meta name="twitter:description" content="A practical, self-paced house sitting course built from 22 real sits in 6 countries. $10 for Black Friday, then $67.">
-<meta name="twitter:image" content="https://www.housesithub.com/assets/images/kitchen.jpg">
+<meta name="twitter:image" content="https://www.housesithub.com/assets/images/og-black-friday.jpg">
 
 <!-- Structured data -->
 <script type="application/ld+json">
@@ -173,6 +173,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="nav" id="navbar">
+  <a class="bf-bar" id="bf-bar" href="#black-friday">
+    <b>Black Friday</b>
+    <span>Course $67 → <strong>$10</strong></span>
+    <span class="bf-left">Ends in <strong id="bf-bar-time">--</strong></span>
+    <span class="bf-go">Claim it →</span>
+  </a>
   <div class="wrap">
     <div class="nav-row">
       <a class="brand" href="#top" aria-label="House Sit Hub, back to top">
@@ -222,6 +228,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </dl>
       </div>
       <figure class="hero-photo hero-cutout">
+        <div class="bf-sticker" id="bf-sticker" aria-label="85 percent off for Black Friday"><b>85%</b><span>off until<br>Cyber Monday</span></div>
         <img src="assets/images/family-cutout.webp" alt="The Strydom family: two parents, a daughter in a wheelchair and a young son in a stroller" width="640" height="595" fetchpriority="high" loading="eager">
       </figure>
     </div>
@@ -517,12 +524,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const s = Math.floor(remaining / 1000);
     const values = { days: Math.floor(s / 86400), hours: Math.floor((s % 86400) / 3600), minutes: Math.floor((s % 3600) / 60), seconds: s % 60 };
     root.querySelectorAll('[data-bf-unit]').forEach(el => { el.textContent = String(values[el.dataset.bfUnit]); });
+    const bar = document.getElementById('bf-bar-time');
+    if (bar) {
+      const p = n => String(n).padStart(2, '0');
+      bar.textContent = values.days > 0 ? `${values.days}d ${p(values.hours)}h ${p(values.minutes)}m` : `${p(values.hours)}:${p(values.minutes)}:${p(values.seconds)}`;
+    }
     return remaining > 0;
   }
 
   function restoreLaunchPricing() {
     const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
     document.getElementById('black-friday')?.classList.add('hidden');
+    document.getElementById('bf-bar')?.classList.add('hidden');
+    document.getElementById('bf-sticker')?.classList.add('hidden');
     document.querySelectorAll('[data-bf-cta]').forEach(el => {
       el.setAttribute('href', el.dataset.launchHref);
       el.textContent = el.dataset.launchLabel;
