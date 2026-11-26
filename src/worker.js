@@ -80,11 +80,34 @@ async function checkout(request, env) {
   return json(200, { url: data.url });
 }
 
+// Confirms a Checkout Session was really paid, so the thank-you page only reports genuine purchases.
+// Returns amount and currency only: no customer data leaves Stripe.
+async function verifySession(request, env) {
+  if (request.method !== "GET") return json(405, { error: "Method not allowed" }, { allow: "GET" });
+  const id = new URL(request.url).searchParams.get("session_id") || "";
+  if (!/^cs_(test|live)_[A-Za-z0-9]{10,200}$/.test(id) || !env.STRIPE_SECRET_KEY) {
+    return json(400, { paid: false });
+  }
+  const res = await fetch("https://api.stripe.com/v1/checkout/sessions/" + id, {
+    headers: { Authorization: "Bearer " + env.STRIPE_SECRET_KEY },
+  });
+  if (!res.ok) return json(404, { paid: false });
+  const s = await res.json();
+  return json(
+    200,
+    { paid: s.payment_status === "paid", value: (s.amount_total || 0) / 100, currency: (s.currency || "usd").toUpperCase() },
+    { "cache-control": "no-store" },
+  );
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (url.pathname === "/api/create-checkout-session") {
       return checkout(request, env);
+    }
+    if (url.pathname === "/api/verify-session") {
+      return verifySession(request, env);
     }
     return env.ASSETS.fetch(request);
   },

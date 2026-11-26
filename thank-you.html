@@ -11,56 +11,51 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
 <script>
-  // Purchase event: Stripe's success_url adds ?session_id=cs_..., so only real checkout returns fire it.
+  // Purchase event: only fires after our Worker confirms with Stripe that this Checkout Session was paid,
+  // and only once per session. GTM itself only loads if the visitor accepted cookies (assets/js/consent.js).
   window.dataLayer = window.dataLayer || [];
   (function () {
     var sid = new URLSearchParams(location.search).get('session_id');
-    if (sid && /^cs_/.test(sid)) {
-      var key = 'purchase_sent_' + sid;
-      try { if (sessionStorage.getItem(key)) sid = null; else sessionStorage.setItem(key, '1'); } catch (e) {}
-      if (sid) window.dataLayer.push({ event: 'purchase', transaction_id: sid, currency: 'USD', item_name: 'Learn How to House Sit' });
-    }
+    if (!sid || !/^cs_(test|live)_/.test(sid)) return;
+    var key = 'purchase_sent_' + sid;
+    try { if (sessionStorage.getItem(key)) return; } catch (e) {}
+    fetch('/api/verify-session?session_id=' + encodeURIComponent(sid))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || !d.paid) return;
+        try { sessionStorage.setItem(key, '1'); } catch (e) {}
+        window.dataLayer.push({
+          event: 'purchase', transaction_id: sid, value: d.value, currency: d.currency,
+          items: [{ item_name: 'Learn How to House Sit', price: d.value, quantity: 1 }]
+        });
+      })
+      .catch(function () {});
   })();
 </script>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WTQ2BRSJ');</script>
-<!-- End Google Tag Manager -->
+<script src="assets/js/consent.js" defer></script>
 </head>
 <body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTQ2BRSJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-
-    <header class="nav" id="navbar"><div class="wrap"><div class="nav-row">
+<header class="nav" id="navbar"><div class="wrap"><div class="nav-row">
 <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg></span>House Sit Hub</a>
-
-
 </div></div></header>
 
-    <main id="main"><section><div class="wrap thanks">
-                <div class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-                </div>
-                <h1>You're in. Welcome aboard.</h1>
-                <p>
-                    Thanks for joining Learn How to House Sit. Check your email in the next few minutes — we're sending your login details so you can access the course right away.
-                </p>
-                <div class="card"><h2>What happens next</h2>
-                    <ul>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg> Your login details are on their way to your inbox</li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg> Your free 30-minute founder call is included — <a href="https://cal.com/housesithub/30min">book it now</a></li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg> No email after 15 minutes? Check spam, or email us and we'll sort it out</li>
-                    </ul>
-                </div>
-                <p>
-                    Questions? Reach us any time at
-                    <a href="mailto:help@housesithub.com">help@housesithub.com</a>
-                </p>
-            </div></section></main>
+<main id="main"><section><div class="wrap thanks">
+  <div class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></div>
+  <h1>Welcome to the house sitting crowd.</h1>
+  <p>Thanks for joining Learn How to House Sit. Your payment went through, and your login details are on their way to your inbox. They usually arrive within a few minutes.</p>
 
-    <footer class="footer"><div class="wrap">
+  <p class="thanks-cta"><a class="btn" href="https://courses.housesithub.com/">Go to your course</a></p>
 
-<div class="footer-base">© 2026 Learn How to House Sit, a House Sit Hub course.</div></div></footer>
+  <div class="card"><h2>What happens next</h2>
+    <ol class="steps">
+      <li><b>Check your inbox.</b> Look for an email with your login. If it hasn't arrived after 15 minutes, check spam, or email us and we'll sort it out.</li>
+      <li><b>Start Module 1.</b> Understanding House Sitting takes about an hour at your own pace. Do it before anything else.</li>
+      <li><b>Book your founder call.</b> Your free 30-minute 1:1 with us is included. <a href="https://cal.com/housesithub/30min">Pick a time</a>.</li>
+    </ol>
+  </div>
+  <p>Questions? Reach us any time at <a href="mailto:help@housesithub.com">help@housesithub.com</a>.</p>
+</div></section></main>
 
+<footer class="footer"><div class="wrap">
+<div class="footer-base">© 2026 Learn How to House Sit, a House Sit Hub course. <a href="#" data-consent-open>Cookie settings</a></div></div></footer>
 </body></html>

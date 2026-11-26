@@ -48,13 +48,26 @@
     "name": "House Sit Hub",
     "sameAs": "https://www.housesithub.com/"
   },
-  "offers": {
-    "@type": "Offer",
-    "price": "67",
-    "priceCurrency": "USD",
-    "availability": "https://schema.org/InStock",
-    "url": "https://www.housesithub.com/#pricing"
-  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "price": "67",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://www.housesithub.com/#pricing"
+    },
+    {
+      "@type": "Offer",
+      "name": "Black Friday price",
+      "price": "10",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-11-26T00:00:00-05:00",
+      "priceValidUntil": "2026-11-30",
+      "validThrough": "2026-11-30T23:59:00-05:00",
+      "url": "https://www.housesithub.com/#pricing"
+    }
+  ],
   "hasCourseInstance": {
     "@type": "CourseInstance",
     "courseMode": "online"
@@ -150,26 +163,14 @@
 }
 </script>
 
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WTQ2BRSJ');</script>
-<!-- End Google Tag Manager -->
-
 <link rel="preload" as="image" href="assets/images/family-cutout.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/consent.js" defer></script>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTQ2BRSJ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="nav" id="navbar">
@@ -213,18 +214,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="hero-grid">
       <div class="hero-copy" data-enter>
         <span class="pill">Built from 22 real sits across 6 countries</span>
-        <h1>Learn How to House Sit. <em>Travel Like a Local.</em></h1>
+        <h1>Learn How to House Sit. <em>Land Your First Sit.</em></h1>
         <p class="lede">A practical, self-paced house sitting course from a family that has done 22 house sits in 6 countries. Find your first sit, get chosen by owners, and settle into communities instead of checking into hotels.</p>
-        <p class="pill" id="hero-scarcity">Black Friday: $67, now $10 — ends Cyber Monday</p>
         <div class="hero-actions">
           <a href="#black-friday" class="btn" data-bf-cta data-launch-href="#pricing" data-launch-label="Join the Launch Cohort">Get the course for $10</a>
           <a href="#curriculum" class="btn btn-ghost">See what's inside</a>
         </div>
         <dl class="hero-stats">
           <div><dt>22</dt><dd>House Sits Completed</dd></div>
-          <div><dt>23</dt><dd>Years Building Courses That Work</dd></div>
+          <div><dt>23</dt><dd>Years designing training programs</dd></div>
           <div><dt>9wk</dt><dd>Longest Single Sit</dd></div>
-          <div><dt>6+</dt><dd>Countries: USA, France, Ireland, Belgium &amp; More</dd></div>
+          <div><dt>6+</dt><dd>Countries, from France to the USA</dd></div>
         </dl>
       </div>
       <figure class="hero-photo hero-cutout">
@@ -378,30 +378,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="tag" id="pricing-scarcity-badge">Black Friday</span>
           <h3 id="pricing-card-title">Black Friday Price</h3>
           <p class="sub" id="pricing-card-sub">Until Cyber Monday, 30 November</p>
-          <div class="price"><s>$67</s><b id="pricing-now-price">$10</b></div>
+          <div class="price"><s>$67</s><b id="pricing-now-price">$10</b><span class="save" id="pricing-save">You save $57</span></div>
           <p class="note-line">This course pays for itself with your first house sit. A single week in a hotel costs more than this course.</p>
           <ul class="ticks">
+            <li><span><b>Free 30-minute founder call</b> with us after you buy. Personal guidance from the people who built the course.</span></li>
             <li>All 5 modules · 29 lessons</li>
             <li>Full workbook, checklists &amp; templates</li>
             <li>Lifetime access, including future updates</li>
-            <li>Founder call: a free 30-minute 1:1 with us after you buy — personal guidance from the people who built the course</li>
-            <li>30-day guarantee — a full refund if you finish the course and still don't feel ready to apply</li>
+            <li><span><b>30-day guarantee.</b> Finish the course, and if you still don't feel ready to apply, email us for a full refund.</span></li>
           </ul>
           <button id="checkout-btn" class="btn btn-block">Get the course for $10</button>
           <p id="checkout-error" class="err hidden" role="alert">Something went wrong. Please try again.</p>
-        </div>
-        <div class="plan alt">
-          <h3>After launch</h3>
-          <p class="sub">Everything, at the standard price</p>
-          <div class="price"><b>$67</b></div>
-          <ul class="ticks">
-            <li>All 5 modules · 29 lessons</li>
-            <li>Full workbook, checklists &amp; templates</li>
-            <li>Lifetime access, including future updates</li>
-            <li>30-day guarantee — a full refund if you finish the course and still don't feel ready to apply</li>
-          </ul>
-          <p class="note-line" style="text-align:center">Launch pricing ends after the first 20.</p>
-          <div class="after">$67 after launch</div>
         </div>
       </div>
     </div>
@@ -467,6 +454,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <ul>
           <li><a href="privacy-policy.html">Privacy Policy</a></li>
           <li><a href="terms-of-service.html">Terms of Service</a></li>
+          <li><a href="#" data-consent-open>Cookie settings</a></li>
         </ul>
       </div>
     </div>
@@ -547,6 +535,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     set('pricing-card-title', 'Limited Launch Price');
     set('pricing-card-sub', 'For the first 20 people who join');
     set('pricing-now-price', '$47');
+    set('pricing-save', 'You save $20');
     set('pricing-scarcity-badge', scarcity);
     set('hero-scarcity', scarcity);
     const checkoutBtn = document.getElementById('checkout-btn');
