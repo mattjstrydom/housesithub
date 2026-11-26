@@ -1,0 +1,189 @@
+/* =====================================================================
+   House Sit Hub: courses.housesithub.com brand layer ("Sky & Coral")
+   Matches housesithub.com. Paste BELOW the theme header comment in
+   wp-content/themes/edu-press-child/style.css (keep the header comment
+   at the very top; the @import must be the first rule after it).
+
+   How it works: EduPress reads its look from --thim-* CSS variables set by
+   the Customizer, and Elementor reads --e-global-* from its kit. This file
+   re-declares those variables with higher specificity (html:root and
+   body.elementor-kit-6922) so it wins whatever the load order. Remove this
+   block and the old look comes back.
+   ===================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600;700&display=swap");
+
+html:root {
+  /* brand tokens (same values as the main site's site.css) */
+  --hsh-ink: #1D2A4D;
+  --hsh-ink-2: #2A3A66;
+  --hsh-muted: #56627F;
+  --hsh-paper: #F0FAFD;
+  --hsh-sage: #DDF1F7;
+  --hsh-surface: #FFFFFF;
+  --hsh-accent: #D63F45;
+  --hsh-accent-hover: #BC3238;
+  --hsh-blue: #1E78AC;
+  --hsh-line: rgba(29, 42, 77, .12);
+
+  /* EduPress / Customizer variables */
+  --thim-body_primary_color: #D63F45;
+  --thim-body_primary_color-rgb: 214, 63, 69;
+  --thim-background_main_color: #F0FAFD;
+  --thim-border_color: rgba(29, 42, 77, .12);
+  --thim-font_body-font-family: "Instrument Sans";
+  --thim-font_body-color: #56627F;
+  --thim-font_body-font-size: 17px;
+  --thim-font_body-line-height: 1.6em;
+  --thim-font_title-font-family: "Bricolage Grotesque";
+  --thim-font_title-color: #1D2A4D;
+  --thim-font_title-variant: 650;
+  --thim-font_h5-variant: 650;
+  --thim-font_h6-variant: 600;
+  --thim-main_menu-color: #1D2A4D;
+  --thim-main_menu-text-transform: none;
+  --thim-main_menu-font-weight: 500;
+  --thim-main_menu_color-background_color: #F0FAFD;
+  --thim-main_menu_color-border_color: rgba(29, 42, 77, .12);
+  --thim-main_menu_color-text_color_hover: #D63F45;
+  --thim-sub_menu-background_color: #FFFFFF;
+  --thim-sub_menu-text_color: #1D2A4D;
+  --thim-sub_menu-text_color_hover: #D63F45;
+  --thim-mobile_menu-background_color: #F0FAFD;
+  --thim-mobile_menu-text_color: #1D2A4D;
+  --thim-mobile_menu-text_color_hover: #D63F45;
+  --thim-nav_mobile_color-background: #F0FAFD;
+  --thim-nav_mobile_color-text: #1D2A4D;
+  --thim-nav_mobile_color-hover: #D63F45;
+  --thim-sticky_menu-background_color: #F0FAFD;
+  --thim-sticky_menu-text_color: #1D2A4D;
+  --thim-sticky_menu-text_color_hover: #D63F45;
+  --thim-border_radius-item: 18px;
+  --thim-border_radius-item-big: 28px;
+  --thim-border_radius-button: 10px;
+  --thim-breadcrumb_bg_color: #DDF1F7;
+  --thim-breadcrumb_color: #56627F;
+  --thim-breadcrumb_border_color: rgba(29, 42, 77, .12);
+  --thim-course_price_color: #D63F45;
+  --thim-footer_color-bg: #FFFFFF;
+  --thim-footer_color-title: #1D2A4D;
+  --thim-footer_color-text: #56627F;
+  --thim-footer_color-link: #56627F;
+  --thim-footer_color-hover: #D63F45;
+  --thim-copyright_bg_color: #FFFFFF;
+  --thim-copyright_text_color: #56627F;
+  --thim-copyright_border_color: rgba(29, 42, 77, .12);
+  --thim-theme_feature_preloading_style-background: #F0FAFD;
+  --thim-theme_feature_preloading_style-color: #D63F45;
+
+  /* LearnPress variables */
+  --lp-primary-color: #D63F45;
+  --lp-secondary-color: #1D2A4D;
+  --lp-button-background-color: #D63F45;
+  --lp-button-color: #FFFFFF;
+  --lp-color-base: #1D2A4D;
+  --lp-border-color: rgba(29, 42, 77, .12);
+  --lp-content-background-color: #FFFFFF;
+}
+
+/* Elementor global colours (kit 6922 declares them on the body class) */
+body.elementor-kit-6922 {
+  --e-global-color-primary: #D63F45;
+  --e-global-color-secondary: #1E78AC;
+  --e-global-color-accent: #1D2A4D;
+  --e-global-color-text: #56627F;
+  --e-global-color-c39b0e9: #F0FAFD;
+  --e-global-color-3008aff: #DDF1F7;
+  --e-global-color-7fd06b2: #56627F;
+  --e-global-typography-accent-font-family: "Instrument Sans";
+}
+
+/* ---------- type ---------- */
+body { background: var(--hsh-paper); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5, h6,
+.course-title, .entry-title, .elementor-heading-title {
+  font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  color: var(--hsh-ink);
+  letter-spacing: -.02em;
+}
+h1, h2 { letter-spacing: -.025em; line-height: 1.1; }
+::selection { background: var(--hsh-accent); color: #fff; }
+:focus-visible { outline: 3px solid var(--hsh-accent); outline-offset: 3px; }
+
+/* ---------- buttons: one coral action colour, white text ---------- */
+.elementor-button,
+.lp-button,
+.learn-press-form .button,
+.learnpress .button,
+.learnpress button.button,
+.wpcf7-submit,
+.btn-lp {
+  background: var(--hsh-accent);
+  color: #fff;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  min-height: 48px;
+  transition: transform .18s ease, background-color .18s ease, box-shadow .18s ease;
+}
+.elementor-button:hover,
+.lp-button:hover,
+.learn-press-form .button:hover,
+.learnpress .button:hover,
+.learnpress button.button:hover,
+.wpcf7-submit:hover,
+.btn-lp:hover {
+  background: var(--hsh-accent-hover);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -10px rgba(214, 63, 69, .65);
+}
+
+/* ---------- header: translucent paper, hairline border ---------- */
+#masthead { background: rgba(240, 250, 253, .9); backdrop-filter: blur(14px); border-bottom: 1px solid var(--hsh-line); }
+#masthead a:hover { color: var(--hsh-accent); }
+
+/* Wordmark: replaces the logo image with live text + coral paper plane.
+   If it misbehaves, upload a logo in Customizer and delete this block. */
+.thim-ekit-site-logo a, .thim-logo, #masthead .custom-logo-link { position: relative; display: inline-flex; align-items: flex-start; gap: 2px; text-decoration: none; }
+.thim-ekit-site-logo img, .thim-logo img, #masthead .custom-logo { display: none !important; }
+.thim-ekit-site-logo a::before, .thim-logo::before, #masthead .custom-logo-link::before {
+  content: "House Sit Hub";
+  font: 750 1.35rem/1.2 "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -.03em;
+  color: var(--hsh-ink);
+}
+.thim-ekit-site-logo a::after, .thim-logo::after, #masthead .custom-logo-link::after {
+  content: "";
+  width: 24px; height: 24px; margin-top: -4px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D63F45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 2 11 13'/%3E%3Cpath d='M22 2l-7 20-4-9-9-4z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---------- cards: white, soft border, brand radius ---------- */
+.lp-archive-courses .lp-list-courses-default .course,
+.learnpress .course-item,
+.learnpress .lp-course-item {
+  background: var(--hsh-surface);
+  border: 1px solid var(--hsh-line);
+  border-radius: 18px;
+  box-shadow: 0 14px 30px -18px rgba(29, 42, 77, .35);
+  overflow: hidden;
+}
+.learnpress .course-price .price, .course-price .price { color: var(--hsh-accent); font-weight: 700; }
+.course-price .origin-price { color: var(--hsh-muted); }
+
+/* ---------- progress, form fields ---------- */
+.learn-press-progress__active, .lp-progress-bar .active { background: var(--hsh-accent); }
+input[type="text"], input[type="email"], input[type="password"], textarea, select {
+  border: 1px solid var(--hsh-line); border-radius: 10px; background: #fff; color: var(--hsh-ink);
+}
+input:focus, textarea:focus, select:focus { border-color: var(--hsh-accent); outline: 3px solid rgba(214, 63, 69, .2); }
+
+/* ---------- footer: white like the main site ---------- */
+body .site-footer .elementor-section.elementor-top-section { background-color: #fff !important; }
+.site-footer { background: #fff; border-top: 1px solid var(--hsh-line); color: var(--hsh-muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
