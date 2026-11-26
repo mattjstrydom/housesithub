@@ -461,11 +461,11 @@ html { scroll-padding-top: 130px; }
 .bf-bar span:nth-of-type(1) strong { color: #FFD9DA; }
 .bf-go { font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
 .bf-bar:hover .bf-go { color: #FFD9DA; }
-@media (max-width: 560px) { .bf-bar { gap: 2px 12px; font-size: .84rem; } .bf-go { display: none; } }
+@media (max-width: 560px) { .bf-bar { flex-wrap: nowrap; gap: 8px 10px; padding-inline: 12px; font-size: .86rem; white-space: nowrap; } .bf-bar b { font-size: .7rem; padding: 5px 8px; } .bf-go, .bf-pre { display: none; } }
 
 .hero-cutout { position: relative; }
 .bf-sticker { position: absolute; z-index: 3; top: 18%; left: 2%; width: 132px; height: 132px; display: grid; place-content: center; text-align: center; border-radius: 50%; background: var(--accent); color: #fff; transform: rotate(-12deg); box-shadow: 0 18px 30px -14px rgba(214, 63, 69, .7); border: 3px dashed rgba(255, 255, 255, .75); outline: 5px solid var(--accent); animation: sticker-in .7s var(--ease) .5s both; }
 .bf-sticker b { font: 750 2.3rem/1 var(--font-display); letter-spacing: -.03em; }
 .bf-sticker span { font: 600 .82rem/1.2 var(--font-body); margin-top: 4px; }
 @keyframes sticker-in { from { opacity: 0; transform: rotate(-30deg) scale(.6); } to { opacity: 1; transform: rotate(-12deg) scale(1); } }
-@media (max-width: 900px) { .bf-sticker { width: 108px; height: 108px; top: 6%; left: 0; } .bf-sticker b { font-size: 1.9rem; } }
+@media (max-width: 900px) { .bf-sticker { width: 128px; height: 128px; top: 0; left: 12px; } .bf-sticker b { font-size: 2rem; } .bf-sticker span { font-size: .8rem; } .hero-cutout { padding-top: 126px; } }
