@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /thank-you.html
+Disallow: /checkout.html
 Disallow: /api/
 
 Sitemap: https://www.housesithub.com/sitemap.xml

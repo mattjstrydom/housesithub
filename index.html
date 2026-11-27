@@ -487,9 +487,14 @@
 
   function isBlackFridayActive() { return Date.now() <= BF_ENDS_AT; }
 
+  // Flip to true once checkout.html has had a successful test payment (see docs/checkout-setup.md).
+  // The page falls back to the hosted Stripe Checkout by itself if anything is misconfigured.
+  const USE_CUSTOM_CHECKOUT = false;
+
   function bindCheckout(button, errorEl, idleLabel) {
     if (!button) return;
     button.addEventListener('click', async () => {
+      if (USE_CUSTOM_CHECKOUT) { window.location.href = 'checkout.html'; return; }
       button.disabled = true;
       button.textContent = 'Redirecting to checkout…';
       if (errorEl) errorEl.classList.add('hidden');

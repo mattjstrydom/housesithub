@@ -26,6 +26,63 @@ async function findActivePromo(secret, code) {
   return null;
 }
 
+// Active promotion code to apply automatically: BLACKFRIDAY first, then EARLYBIRD, else none.
+async function getPromoId(secret) {
+  try {
+    if (Date.now() - promoCache.at > 5 * 60 * 1000) {
+      const bf = await findActivePromo(secret, "BLACKFRIDAY");
+      const id = bf || (await findActivePromo(secret, "EARLYBIRD"));
+      if (!bf && Date.now() <= BF_ENDS_AT) {
+        // The page advertises $10 during Black Friday; without this code the buyer sees a higher price.
+        console.error("BLACKFRIDAY promotion code missing or inactive in Stripe; falling back to", id ? "EARLYBIRD" : "full price");
+      }
+      promoCache = { id, at: Date.now() };
+    }
+    return promoCache.id;
+  } catch {
+    return null;
+  }
+}
+
+// Custom checkout page (checkout.html): same product, price and promo as the hosted flow, but the
+// payment form is built on our own page with Stripe Elements. Returns the client secret for Stripe.js.
+// If anything is missing the page falls back to the hosted flow, so a misconfiguration never blocks a sale.
+async function customCheckout(request, env) {
+  if (request.method !== "POST") {
+    return json(405, { error: "Method not allowed" }, { allow: "POST" });
+  }
+  const secret = env.STRIPE_SECRET_KEY;
+  const publishableKey = env.STRIPE_PUBLISHABLE_KEY;
+  if (!secret || !publishableKey) {
+    return json(503, { error: "not_configured", fallback: true });
+  }
+  const params = new URLSearchParams();
+  params.set("ui_mode", "elements");
+  params.set("mode", "payment");
+  params.set("line_items[0][quantity]", "1");
+  params.set("line_items[0][price_data][currency]", "usd");
+  params.set("line_items[0][price_data][unit_amount]", "6700");
+  params.set("line_items[0][price_data][product]", env.STRIPE_PRODUCT_ID || COURSE_PRODUCT_ID);
+  params.set("return_url", `${SITE_ORIGIN}/thank-you.html?session_id={CHECKOUT_SESSION_ID}`);
+  const promoId = await getPromoId(secret);
+  if (promoId) params.set("discounts[0][promotion_code]", promoId);
+  const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + secret,
+      "content-type": "application/x-www-form-urlencoded",
+      "Stripe-Version": "2026-11-18.endive", // version the Elements-with-Checkout-Sessions docs pin
+    },
+    body: params,
+  });
+  const data = await res.json();
+  if (!res.ok || !data.client_secret) {
+    console.error("custom checkout session failed", res.status, data && data.error && data.error.message);
+    return json(502, { error: "session_failed", fallback: true });
+  }
+  return json(200, { clientSecret: data.client_secret, publishableKey }, { "cache-control": "no-store" });
+}
+
 async function checkout(request, env) {
   if (request.method !== "POST") {
     return json(405, { error: "Method not allowed" }, { allow: "POST" });
@@ -46,23 +103,10 @@ async function checkout(request, env) {
   params.set("line_items[0][price_data][product]", product);
   params.set("success_url", `${origin}/thank-you.html?session_id={CHECKOUT_SESSION_ID}`);
   params.set("cancel_url", `${origin}/#pricing`);
-  try {
-    if (Date.now() - promoCache.at > 5 * 60 * 1000) {
-      const bf = await findActivePromo(secret, "BLACKFRIDAY");
-      const id = bf || (await findActivePromo(secret, "EARLYBIRD"));
-      if (!bf && Date.now() <= BF_ENDS_AT) {
-        // The page advertises $10 during Black Friday; without this code the buyer sees a higher price.
-        console.error("BLACKFRIDAY promotion code missing or inactive in Stripe; falling back to", id ? "EARLYBIRD" : "full price");
-      }
-      promoCache = { id, at: Date.now() };
-    }
-    const promoId = promoCache.id;
-    if (promoId) {
-      params.set("discounts[0][promotion_code]", promoId);
-    } else {
-      params.set("allow_promotion_codes", "true");
-    }
-  } catch {
+  const promoId = await getPromoId(secret);
+  if (promoId) {
+    params.set("discounts[0][promotion_code]", promoId);
+  } else {
     params.set("allow_promotion_codes", "true");
   }
   const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
@@ -105,6 +149,9 @@ export default {
     const url = new URL(request.url);
     if (url.pathname === "/api/create-checkout-session") {
       return checkout(request, env);
+    }
+    if (url.pathname === "/api/checkout-session") {
+      return customCheckout(request, env);
     }
     if (url.pathname === "/api/verify-session") {
       return verifySession(request, env);

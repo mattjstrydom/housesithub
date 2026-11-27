@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure checkout | Learn How to House Sit</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1D2A4D">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg?v=2">
+<link rel="icon" href="assets/images/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://js.stripe.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/checkout.css">
+<script src="assets/js/consent.js" defer></script>
+</head>
+<body class="co-page">
+<a class="skip" href="#main">Skip to checkout</a>
+
+<header class="co-head">
+  <div class="co-head-row">
+    <a class="brand" href="index.html" aria-label="House Sit Hub, back to the course page">
+      <span class="brand-mark" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg></span>House Sit Hub</a>
+    <p class="co-secure"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Secure checkout</p>
+  </div>
+</header>
+
+<main id="main" class="co-main">
+  <p class="co-back"><a href="index.html#pricing">&larr; Back to the course page</a></p>
+  <div class="co-wrap">
+
+    <section class="co-pay" aria-labelledby="co-h1">
+      <h1 id="co-h1">Complete your order</h1>
+      <p class="co-sub">One payment. Instant access to all 5 modules, the workbook and your founder call.</p>
+
+      <div id="co-loading" class="co-loading" role="status" aria-live="polite">
+        <span class="co-spinner" aria-hidden="true"></span> Loading the secure payment form…
+      </div>
+
+      <form id="co-form" class="co-form" hidden novalidate>
+        <fieldset class="co-step">
+          <legend><span class="co-n" aria-hidden="true">1</span> Your email</legend>
+          <p class="co-hint">We'll send your course login here.</p>
+          <div id="contact-element"></div>
+        </fieldset>
+
+        <fieldset class="co-step">
+          <legend><span class="co-n" aria-hidden="true">2</span> Payment</legend>
+          <div id="payment-element"></div>
+        </fieldset>
+
+        <p id="co-error" class="co-error" role="alert" hidden></p>
+
+        <button type="submit" id="co-pay" class="btn btn-block co-paybtn" disabled>Pay and start the course</button>
+
+        <ul class="co-trust" aria-label="Why it's safe to buy">
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Payments are processed by Stripe. We never see your card details.</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg> 30-day guarantee. Finish the course and still not ready to apply? Full refund.</li>
+        </ul>
+        <p class="co-legal">By paying you agree to our <a href="terms-of-service.html">Terms</a> and <a href="privacy-policy.html">Privacy Policy</a>.</p>
+      </form>
+
+      <div id="co-fallback" class="co-fallback" role="status" hidden>
+        <p><strong>Taking you to our secure payment page…</strong></p>
+        <p>If nothing happens, <a href="index.html#pricing">go back to the course page</a> and try again, or email <a href="mailto:help@housesithub.com">help@housesithub.com</a> and we'll sort it out.</p>
+      </div>
+    </section>
+
+    <aside class="co-summary" aria-label="Order summary">
+      <details id="co-sum" class="co-sum" open>
+        <summary><span>Order summary</span> <b id="co-sum-total">&nbsp;</b></summary>
+        <div class="co-sum-body">
+          <div class="co-product">
+            <img src="assets/images/family-cutout.webp" alt="" width="640" height="595" loading="lazy">
+            <div>
+              <h2>Learn How to House Sit</h2>
+              <p>Self-paced course with lifetime access</p>
+            </div>
+          </div>
+          <ul class="co-incl">
+            <li>All 5 modules, 29 lessons</li>
+            <li>Full workbook, checklists and templates</li>
+            <li>Lifetime access, including future updates</li>
+            <li><span><b>Free 30-minute founder call</b> with us</span></li>
+          </ul>
+          <dl class="co-lines">
+            <div id="co-row-regular" hidden><dt>Regular price</dt><dd><s id="co-regular">$67.00</s></dd></div>
+            <div id="co-row-discount" hidden><dt>Black Friday discount</dt><dd id="co-discount"></dd></div>
+            <div class="co-total"><dt>Total today</dt><dd><b id="co-total">&nbsp;</b> <small>USD</small></dd></div>
+          </dl>
+          <p id="co-timer-wrap" class="co-timer" hidden>Black Friday price ends in <b id="co-timer">--</b></p>
+        </div>
+      </details>
+
+      <div class="co-guarantee">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
+        <div><b>30-day Ready-to-Apply guarantee</b>
+        <p>Finish the course. If you still don't feel ready to apply for your first sit, email us within 30 days for a full refund.</p></div>
+      </div>
+
+      <dl class="co-faq">
+        <dt>When do I get access?</dt><dd>Right away. Your login arrives by email within a few minutes.</dd>
+        <dt>Is it live or self-paced?</dt><dd>Fully self-paced. Work through it whenever suits you.</dd>
+        <dt>Need help?</dt><dd><a href="mailto:help@housesithub.com">help@housesithub.com</a></dd>
+      </dl>
+    </aside>
+  </div>
+</main>
+
+<footer class="co-foot">
+  <a href="terms-of-service.html">Terms</a> <a href="privacy-policy.html">Privacy</a> <a href="#" data-consent-open>Cookie settings</a>
+  <span>&copy; 2026 Learn How to House Sit, a House Sit Hub course.</span>
+</footer>
+
+<script src="assets/js/checkout.js" defer></script>
+</body>
+</html>
