@@ -21,12 +21,18 @@
   syncSummary();
   if (mq.addEventListener) mq.addEventListener('change', syncSummary);
 
-  function money(a) { return typeof a === 'number' ? '$' + (a / 100).toFixed(2) : String(a); }
-  function num(a) {
-    if (typeof a === 'number') return a / 100;
-    var n = parseFloat(String(a).replace(/[^0-9.]/g, ''));
-    return isNaN(n) ? null : n;
+  // Stripe formats amounts for the visitor's locale (for example "US$10,00"), so read the cents from it
+  // and format the display ourselves. Prefer the numeric field if Stripe provides one.
+  function cents(t) {
+    if (!t) return null;
+    if (typeof t.minorUnitsAmount === 'number') return t.minorUnitsAmount;
+    var a = t.amount;
+    if (typeof a === 'number') return a;
+    var d = String(a == null ? '' : a).replace(/\D/g, '');
+    return d ? parseInt(d, 10) : null;
   }
+  var usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+  function money(dollars) { return usd.format(dollars); }
 
   function showError(msg) {
     els.error.textContent = msg || '';
@@ -65,10 +71,10 @@
   var busy = false, tracked = false, latest = null;
   function render(session) {
     latest = session;
-    var totalRaw = session && session.total && session.total.total && session.total.total.amount;
-    if (totalRaw == null) return;
-    var total = num(totalRaw);
-    var label = money(totalRaw);
+    var c = cents(session && session.total && session.total.total);
+    if (c === null) return;
+    var total = c / 100;
+    var label = money(total);
     els.total.textContent = label;
     els.sumTotal.textContent = label;
     els.pay.textContent = busy ? 'Processing…' : 'Pay ' + label + ' and start the course';
@@ -78,8 +84,8 @@
     els.rowRegular.hidden = !discounted;
     els.rowDiscount.hidden = !discounted;
     if (discounted) {
-      els.regular.textContent = '$' + REGULAR.toFixed(2);
-      els.discount.textContent = '−$' + (REGULAR - total).toFixed(2);
+      els.regular.textContent = money(REGULAR);
+      els.discount.textContent = '−' + money(REGULAR - total);
     }
     var live = discounted && Date.now() <= BF_ENDS_AT;
     els.timerWrap.hidden = !live;
