@@ -505,3 +505,22 @@ html { scroll-padding-top: 130px; }
 .footer li + li { margin-top: 0; }
 .footer-base a { display: inline-block; padding-block: 12px; }
 .brand { min-height: 44px; }
+
+
+/* ---------- hero doorway: the family stands in an arched door that opens on load ---------- */
+.hero-grid::before { display: none; }
+.hero-door { position: relative; margin: 0 max(var(--gutter), calc((100vw - var(--wrap)) / 2)) 0 0; align-self: end; display: flex; justify-content: center; }
+.door { position: relative; width: min(100%, 520px); aspect-ratio: 4 / 5.2; }
+.door::before { content: ""; position: absolute; inset: -14px -14px 0; border: 1.5px solid rgba(214, 63, 69, .5); border-bottom: 0; border-radius: 999px 999px 0 0; }
+.door-glass { position: absolute; inset: 0; border-radius: 999px 999px 0 0; overflow: hidden; background: linear-gradient(180deg, #D9F0F7 0%, #FFF5EA 100%); animation: door-open 1.3s var(--ease) both; }
+.door-glass img { position: absolute; left: 50%; bottom: 0; width: 112%; max-width: none; height: auto; transform: translateX(-50%); animation: settle-up 1.8s var(--ease) .1s both; }
+@keyframes door-open { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes settle-up { from { transform: translateX(-50%) translateY(7%) scale(1.05); } to { transform: translateX(-50%); } }
+.bf-sticker { top: 4%; left: auto; right: -34px; }
+@media (max-width: 900px) {
+  .hero-door { margin: 0 var(--gutter); padding-top: 100px; }
+  .door { width: min(100%, 400px); }
+  .bf-sticker { top: 0; right: 4%; left: auto; }
+}
+.hero-copy h1 { font-size: clamp(2.4rem, 5.2vw, 4.25rem); text-wrap: balance; }
+.note.big blockquote { line-height: 1.4; }
