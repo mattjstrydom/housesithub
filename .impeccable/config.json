@@ -15,6 +15,24 @@
         "value": "instrument sans",
         "createdAt": "2026-11-26T04:42:33.676Z",
         "reason": "Agent: user asked for courses.housesithub.com to match the main site, which already uses Instrument Sans; the font is mandated by that brief, not newly chosen"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "brand-kit/src/og-default.html"
+        ],
+        "createdAt": "2026-11-27T05:28:54.880Z",
+        "reason": "Agent: render template for a 1200x630 share image; text sits 72px from the card edge and the only flush element is the family cut-out standing in the doorway by design"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "brand-kit/house-sit-hub-brand-kit/src/og-default.html"
+        ],
+        "createdAt": "2026-11-27T05:40:08.550Z",
+        "reason": "Agent: duplicate copy of the share-image render template already ignored at brand-kit/src/og-default.html (extracted zip); same false positive"
       }
     ]
   }
