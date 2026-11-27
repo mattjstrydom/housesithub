@@ -4,6 +4,9 @@
   "compatibility_date": "2026-11-25",
   "workers_dev": true,
   "preview_urls": true,
+  "vars": {
+    "STRIPE_PUBLISHABLE_KEY": "pk_live_51HAhpLAwP98eOwgG1E78ayeyJ3KXsHMYJ5EOu1UxYcGKRtxJCF4dCZmm72OKXoRb1bXxsEpHyH7WyKQCj047GrvA00jTqYYzSk"
+  },
   "assets": {
     "directory": "./",
     "binding": "ASSETS",
