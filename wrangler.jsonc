@@ -26,5 +26,22 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page",
     "run_worker_first": ["/api/*", "/login", "/auth/*", "/course", "/course/*"]
+  },
+  "previews": {
+    "vars": {
+      "SITE_ORIGIN": "https://lms-housesithub.closedlogic.workers.dev",
+      "EMAIL_FROM": "House Sit Hub <course@housesithub.com>"
+    },
+    "d1_databases": [
+      {
+        "binding": "DB",
+        "database_name": "housesithub-lms-staging",
+        "database_id": "57d89ee6-5d6b-4164-b06c-73abba81e626",
+        "migrations_dir": "lms/migrations"
+      }
+    ],
+    "r2_buckets": [
+      { "binding": "COURSE_FILES", "bucket_name": "housesithub-course-files" }
+    ]
   }
 }
