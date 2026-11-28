@@ -5,13 +5,26 @@
   "workers_dev": true,
   "preview_urls": true,
   "vars": {
+    "SITE_ORIGIN": "https://www.housesithub.com",
+    "EMAIL_FROM": "House Sit Hub <course@housesithub.com>",
     "STRIPE_PUBLISHABLE_KEY": "pk_live_51HAhpLAwP98eOwgG1E78ayeyJ3KXsHMYJ5EOu1UxYcGKRtxJCF4dCZmm72OKXoRb1bXxsEpHyH7WyKQCj047GrvA00jTqYYzSk"
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "housesithub-lms",
+      "database_id": "REPLACE_WITH_ID_FROM_wrangler_d1_create",
+      "migrations_dir": "lms/migrations"
+    }
+  ],
+  "r2_buckets": [
+    { "binding": "COURSE_FILES", "bucket_name": "housesithub-course-files" }
+  ],
   "assets": {
     "directory": "./",
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": ["/api/*", "/login", "/auth/*", "/course", "/course/*"]
   }
 }

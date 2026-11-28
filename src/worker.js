@@ -1,3 +1,5 @@
+import { handleLms } from "../lms/src/lms.js";
+
 function json(status, body, extra) {
   return new Response(JSON.stringify(body), {
     status,
@@ -146,6 +148,9 @@ async function verifySession(request, env) {
 
 export default {
   async fetch(request, env) {
+    // Course site (login, lessons, Stripe webhook). Returns null for every other route.
+    const lms = await handleLms(request, env);
+    if (lms) return lms;
     const url = new URL(request.url);
     if (url.pathname === "/api/create-checkout-session") {
       return checkout(request, env);

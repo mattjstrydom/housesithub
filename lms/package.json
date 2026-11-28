@@ -1,0 +1,13 @@
+{
+  "name": "housesithub-lms",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:content": "node scripts/build_content.mjs",
+    "test": "node --test test/lms.test.mjs"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}
