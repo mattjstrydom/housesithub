@@ -7,6 +7,7 @@
   "vars": {
     "SITE_ORIGIN": "https://www.housesithub.com",
     "EMAIL_FROM": "House Sit Hub <course@housesithub.com>",
+    "ADMIN_EMAILS": "matt@housesithub.com",
     "STRIPE_PUBLISHABLE_KEY": "pk_live_51HAhpLAwP98eOwgG1E78ayeyJ3KXsHMYJ5EOu1UxYcGKRtxJCF4dCZmm72OKXoRb1bXxsEpHyH7WyKQCj047GrvA00jTqYYzSk"
   },
   "d1_databases": [
@@ -25,12 +26,13 @@
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/api/*", "/login", "/auth/*", "/course", "/course/*"]
+    "run_worker_first": ["/api/*", "/login", "/auth/*", "/course", "/course/*", "/admin", "/admin/*"]
   },
   "previews": {
     "vars": {
       "SITE_ORIGIN": "https://lms-housesithub.closedlogic.workers.dev",
       "EMAIL_FROM": "House Sit Hub <course@housesithub.com>",
+      "ADMIN_EMAILS": "matt@housesithub.com",
       "STRIPE_PUBLISHABLE_KEY": "pk_test_51HAhpLAwP98eOwgGdatG0SPuJaHqT1LKAYjDnlQMw57qwKyawJnhENJKI54DwzwY0USasfNOkY9vMXcLiJwmhauy00pk4Adpcq",
       "STRIPE_PRODUCT_ID": "prod_V1M9gqe16WYUzh"
     },

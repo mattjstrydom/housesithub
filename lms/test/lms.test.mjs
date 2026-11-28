@@ -15,7 +15,7 @@ function setup() {
   resendFails = false;
   env = {
     DB: db, STRIPE_WEBHOOK_SECRET: SECRET, RESEND_API_KEY: "re_test", EMAIL_FROM: "Course <hi@example.com>",
-    SITE_ORIGIN: ORIGIN, NOW: () => now,
+    SITE_ORIGIN: ORIGIN, ADMIN_EMAILS: "Boss@Example.com, other@example.com", NOW: () => now,
     COURSE_FILES: { get: async (k) => (k === "checklists/10 Pre-trip checklist.pdf" ? { body: "%PDF-fake" } : null) },
   };
   globalThis.fetch = async (url, init) => {
@@ -237,4 +237,44 @@ test("every response carries the security headers, and non-course paths pass thr
   assert.equal(res.headers.get("cache-control"), "private, no-store");
   assert.equal(await call("/thank-you.html"), null);
   assert.equal(await call("/api/create-checkout-session", { method: "POST" }), null);
+});
+
+async function adminCookie() {
+  await post("/api/login", { email: "boss@example.com" });
+  assert.equal(sent.length > 0, true, "admin gets a login link even with no purchase");
+  const { res, cookie } = await logIn(linkFrom(sent.at(-1)));
+  assert.equal(res.headers.get("location"), "/admin");
+  return cookie;
+}
+
+test("admin area: signed out goes to login, a plain student sees 404", async () => {
+  assert.equal((await get("/admin")).status, 302);
+  const student = await newStudent();
+  assert.equal((await get("/admin", student)).status, 404);
+  assert.equal((await post("/api/admin/grant", { email: "x@example.com" }, { cookie: student })).status, 404);
+});
+
+test("admin lists learners, grants and revokes access, and rejects cross-site posts", async () => {
+  const student = await newStudent("jane@example.com");
+  await post("/api/progress", { lesson: "m1l1", done: "1" }, { cookie: student });
+  const admin = await adminCookie();
+  const list = await (await get("/admin", admin)).text();
+  assert.match(list, /jane@example.com/);
+  assert.match(list, /1 of 36/);
+  assert.match(await (await get("/admin/user/1", admin)).text(), /Completed/);
+
+  const evil = await post("/api/admin/grant", { email: "new@example.com" }, { cookie: admin, origin: "https://evil.example" });
+  assert.equal(evil.status, 403);
+
+  assert.match((await post("/api/admin/grant", { email: "New@Example.com" }, { cookie: admin })).headers.get("location"), /m=granted/);
+  assert.match((await post("/api/admin/grant", { email: "new@example.com" }, { cookie: admin })).headers.get("location"), /m=exists/);
+  assert.match((await post("/api/admin/grant", { email: "nope" }, { cookie: admin })).headers.get("location"), /m=bad/);
+  await post("/api/login", { email: "new@example.com" });
+  assert.equal((await logIn(linkFrom(sent.at(-1)))).res.headers.get("location"), "/course");
+
+  assert.match((await post("/api/admin/revoke", { user_id: "1" }, { cookie: admin })).headers.get("location"), /m=revoked/);
+  assert.equal((await get("/course", student)).status, 403);
+  assert.match(await (await get("/admin", admin)).text(), /Revoked or refunded/);
+  await post("/api/admin/grant", { email: "jane@example.com" }, { cookie: admin });
+  assert.equal((await get("/course", student)).status, 200);
 });

@@ -164,3 +164,47 @@ export function noAccessPage() {
     body: `<div class="narrow"><h1>We can't find an active purchase</h1><p>This email doesn't have access to the course. If you think this is a mistake, reply to your purchase email and we'll sort it out.</p></div>`,
   });
 }
+
+// ---------- Admin ----------
+const day = (s) => (s ? new Date(s * 1000).toISOString().slice(0, 10) : "never");
+const ADMIN_CSS = `<style>table.files th{text-align:left;padding:12px 16px;background:var(--sage)}.scroll{overflow-x:auto}.inline{display:inline;margin:0}.inline input[type=email]{width:auto;min-width:260px;margin:0 8px 0 0}</style>`;
+const accessLabel = (active, purchases) => (active ? "Active" : purchases ? "Revoked or refunded" : "None");
+const grantForm = (email) => `<form class="inline" method="post" action="/api/admin/grant"><input type="hidden" name="email" value="${esc(email)}"><button class="btn small" type="submit">Grant access</button></form>`;
+const revokeForm = (id) => `<form class="inline" method="post" action="/api/admin/revoke"><input type="hidden" name="user_id" value="${id}"><button class="btn ghost small" type="submit">Revoke</button></form>`;
+const noteHtml = (note) => (note ? `<p class="note" role="status">${esc(note)}</p>` : "");
+
+export function adminPage({ user, rows, total, note }) {
+  const activeCount = rows.filter((r) => r.active).length;
+  const body = `${ADMIN_CSS}<h1>Learners</h1>${noteHtml(note)}
+<p class="muted">${rows.length} accounts, ${activeCount} with active access.</p>
+<div class="card" style="margin-bottom:24px"><form method="post" action="/api/admin/grant"><label for="ge">Grant access to an email</label><input id="ge" type="email" name="email" required autocomplete="off">
+<button class="btn small" type="submit">Grant access</button></form><p class="muted" style="margin-bottom:0">No email is sent. They log in at /login with that address.</p></div>
+<div class="scroll"><table class="files"><thead><tr><th>Email</th><th>Access</th><th>Progress</th><th>Last seen</th><th>Joined</th><th></th></tr></thead><tbody>${rows
+    .map(
+      (r) =>
+        `<tr><td><a href="/admin/user/${r.id}">${esc(r.email)}</a></td><td>${accessLabel(r.active, r.purchases)}</td><td>${r.done} of ${total}</td><td>${day(r.last_seen)}</td><td>${day(r.created_at)}</td><td style="text-align:right">${r.active ? revokeForm(r.id) : grantForm(r.email)}</td></tr>`,
+    )
+    .join("")}</tbody></table></div>`;
+  return layout({ user, current: "admin", title: "Learners", body });
+}
+
+export function adminUserPage({ user, learner, course, purchases, progress, note }) {
+  const active = purchases.some((p) => p.status === "active");
+  const all = course.modules.flatMap((m) => m.lessons);
+  const done = all.filter((l) => progress.get(l.id)?.completed_at).length;
+  const state = (id) => {
+    const p = progress.get(id);
+    return p?.completed_at ? `Completed ${day(p.completed_at)}` : p ? `Viewed ${day(p.last_viewed_at)}` : "Not started";
+  };
+  const body = `${ADMIN_CSS}<p class="crumbs"><a href="/admin">All learners</a></p><h1>${esc(learner.email)}</h1>${noteHtml(note)}
+<p>Access: <strong>${accessLabel(active, purchases.length)}</strong> &middot; ${done} of ${all.length} lessons complete &middot; joined ${day(learner.created_at)}</p>
+<div class="row">${active ? revokeForm(learner.id) : grantForm(learner.email)}</div>
+<h2>Purchases</h2>${purchases.length ? `<table class="files"><tbody>${purchases.map((p) => `<tr><td>${day(p.created_at)}</td><td>${esc(p.source)}</td><td>${esc(p.status)}</td></tr>`).join("")}</tbody></table>` : `<p class="muted">None.</p>`}
+${course.modules
+    .map(
+      (m) =>
+        `<h2>Module ${m.n}: ${esc(m.title)}</h2><table class="files"><tbody>${m.lessons.map((l) => `<tr><td>${l.n}. ${esc(l.title)}</td><td style="text-align:right">${state(l.id)}</td></tr>`).join("")}</tbody></table>`,
+    )
+    .join("")}`;
+  return layout({ user, current: "admin", title: learner.email, body });
+}

@@ -87,3 +87,30 @@ export const setCompleted = (db, userId, lessonId, complete, now) =>
     .prepare("INSERT INTO progress (user_id, lesson_id, completed_at, last_viewed_at) VALUES (?, ?, ?, ?) ON CONFLICT(user_id, lesson_id) DO UPDATE SET completed_at = excluded.completed_at")
     .bind(userId, lessonId, complete ? now : null, now)
     .run();
+
+// Admin
+export const getUserById = (db, id) => db.prepare("SELECT id, email, created_at FROM users WHERE id = ?").bind(id).first();
+// ponytail: newest 500 learners, no paging or search; add both when the list outgrows one page.
+export async function listLearners(db) {
+  const { results } = await db
+    .prepare(
+      `SELECT u.id, u.email, u.created_at,
+        (SELECT COUNT(*) FROM purchases p WHERE p.user_id = u.id AND p.status = 'active') AS active,
+        (SELECT COUNT(*) FROM purchases p WHERE p.user_id = u.id) AS purchases,
+        (SELECT COUNT(*) FROM progress g WHERE g.user_id = u.id AND g.completed_at IS NOT NULL) AS done,
+        (SELECT MAX(last_viewed_at) FROM progress g WHERE g.user_id = u.id) AS last_seen
+       FROM users u ORDER BY u.created_at DESC, u.id DESC LIMIT 500`,
+    )
+    .all();
+  return results;
+}
+export async function getPurchases(db, userId) {
+  const { results } = await db.prepare("SELECT status, source, created_at FROM purchases WHERE user_id = ? ORDER BY id DESC").bind(userId).all();
+  return results;
+}
+export async function getProgressRows(db, userId) {
+  const { results } = await db.prepare("SELECT lesson_id, completed_at, last_viewed_at FROM progress WHERE user_id = ?").bind(userId).all();
+  return new Map(results.map((r) => [r.lesson_id, r]));
+}
+// The purchases table only allows active or refunded, so a revoke is stored as refunded.
+export const revokeAccess = (db, userId) => db.prepare("UPDATE purchases SET status = 'refunded' WHERE user_id = ? AND status = 'active'").bind(userId).run();

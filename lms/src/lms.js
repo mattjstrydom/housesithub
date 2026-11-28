@@ -69,6 +69,61 @@ async function requireStudent(request, env, now) {
   return { user };
 }
 
+// Admins are the emails in the ADMIN_EMAILS var (comma separated). Checked on every request, so removing one revokes at once.
+const isAdminEmail = (env, email) => String(env.ADMIN_EMAILS || "").split(",").map(q.normEmail).includes(email);
+
+async function requireAdmin(request, env, now) {
+  const raw = readCookie(request);
+  const user = raw && TOKEN_RE.test(raw) ? await q.getSessionUser(env.DB, await sha256Hex(raw), now) : null;
+  if (!user) return { response: redirect("/login", 302) };
+  if (!isAdminEmail(env, user.email)) return { response: notFound("We couldn't find that page.") }; // do not reveal the admin area
+  return { user };
+}
+
+const ADMIN_NOTES = {
+  granted: "Access granted. They can log in at /login with that email (no email was sent from here).",
+  exists: "They already have access.",
+  revoked: "Access revoked.",
+  bad: "That doesn't look like a valid email address.",
+};
+
+async function adminRoutes(request, env, url, path, now) {
+  const auth = await requireAdmin(request, env, now);
+  if (auth.response) return auth.response;
+  const method = request.method;
+  const back = (code, to = "/admin") => redirect(`${to}?m=${code}`);
+
+  if (path === "/api/admin/grant" || path === "/api/admin/revoke") {
+    if (method !== "POST") return json(405, { error: "Method not allowed" });
+    if (!sameOrigin(request, url)) return json(403, { error: "bad_origin" });
+    const form = await request.formData().catch(() => null);
+    if (path === "/api/admin/grant") {
+      const email = q.normEmail(form && form.get("email"));
+      if (!q.validEmail(email)) return back("bad");
+      const user = await q.upsertUser(env.DB, email, now);
+      if (await q.hasActiveAccess(env.DB, user.id)) return back("exists");
+      await q.addPurchase(env.DB, { userId: user.id, sessionId: null, paymentIntent: null, source: "manual", now });
+      console.log("admin grant", auth.user.email, "->", email);
+      return back("granted");
+    }
+    const target = await q.getUserById(env.DB, Number(form && form.get("user_id")));
+    if (!target) return back("bad");
+    await q.revokeAccess(env.DB, target.id);
+    console.log("admin revoke", auth.user.email, "->", target.email);
+    return back("revoked");
+  }
+
+  if (method !== "GET") return json(405, { error: "Method not allowed" });
+  const note = ADMIN_NOTES[url.searchParams.get("m")] || null;
+  if (path === "/admin") return html(pages.adminPage({ user: auth.user, rows: await q.listLearners(env.DB), total: LESSONS.length, note }));
+  const m = path.match(/^\/admin\/user\/(\d+)$/);
+  const learner = m && (await q.getUserById(env.DB, Number(m[1])));
+  if (!learner) return notFound("We couldn't find that learner.");
+  return html(
+    pages.adminUserPage({ user: auth.user, learner, course, purchases: await q.getPurchases(env.DB, learner.id), progress: await q.getProgressRows(env.DB, learner.id), note }),
+  );
+}
+
 async function stripeWebhook(request, env, now) {
   if (request.method !== "POST") return json(405, { error: "Method not allowed" });
   const raw = await request.text();
@@ -124,8 +179,9 @@ async function loginPost(request, env, url, now) {
   if ((await q.hit(env.DB, "ip:" + ip, now)) > 20) return html(pages.loginPage({ message: "Too many attempts. Please try again in a few minutes." }), 429);
   // Over the per-email limit we stay silent and look identical to success, so nobody can probe emails.
   if ((await q.hit(env.DB, "email:" + email, now)) <= 5) {
-    const user = await q.findUserByEmail(env.DB, email);
-    if (user && (await q.hasActiveAccess(env.DB, user.id))) {
+    const admin = isAdminEmail(env, email);
+    const user = admin ? await q.upsertUser(env.DB, email, now) : await q.findUserByEmail(env.DB, email); // admins may have no purchase
+    if (user && (admin || (await q.hasActiveAccess(env.DB, user.id)))) {
       const token = randomToken();
       await q.createLoginToken(env.DB, await sha256Hex(token), user.id, now + LINK_SEC);
       try {
@@ -153,10 +209,12 @@ async function verifyLink(request, env, url, now) {
   if (!TOKEN_RE.test(token)) return html(pages.invalidLinkPage(), 400);
   const userId = await q.consumeLoginToken(env.DB, await sha256Hex(token), now);
   if (!userId) return html(pages.invalidLinkPage(), 400);
-  if (!(await q.hasActiveAccess(env.DB, userId))) return html(pages.noAccessPage(), 403);
+  const access = await q.hasActiveAccess(env.DB, userId);
+  const admin = isAdminEmail(env, (await q.getUserById(env.DB, userId)).email);
+  if (!access && !admin) return html(pages.noAccessPage(), 403);
   const session = randomToken();
   await q.createSession(env.DB, await sha256Hex(session), userId, now + SESSION_SEC);
-  return redirect("/course", 303, { "set-cookie": cookieHeader(url, session, SESSION_SEC) });
+  return redirect(access ? "/course" : "/admin", 303, { "set-cookie": cookieHeader(url, session, SESSION_SEC) });
 }
 
 /** Returns a Response for LMS routes, or null so the main Worker carries on. */
@@ -170,6 +228,8 @@ export async function handleLms(request, env) {
   if (path === "/login") return method === "GET" ? html(pages.loginPage()) : json(405, { error: "Method not allowed" });
   if (path === "/api/login") return method === "POST" ? loginPost(request, env, url, now) : json(405, { error: "Method not allowed" });
   if (path === "/auth/verify") return verifyLink(request, env, url, now);
+
+  if (path === "/admin" || path.startsWith("/admin/") || path.startsWith("/api/admin/")) return adminRoutes(request, env, url, path, now);
 
   if (path === "/api/logout") {
     if (method !== "POST") return json(405, { error: "Method not allowed" });
