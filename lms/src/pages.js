@@ -132,7 +132,7 @@ export function lessonPage({ user, course, lesson, mod, done, wistiaId, prev, ne
 <div class="row"><form method="post" action="/api/progress"><input type="hidden" name="lesson" value="${lesson.id}"><input type="hidden" name="done" value="${isDone ? "0" : "1"}">
 <button class="btn${isDone ? " ghost" : ""}" type="submit">${isDone ? "&#10003; Completed (undo)" : "Mark as complete"}</button></form>
 <a class="push" href="/course/downloads">Workbook and checklists</a></div>
-<details class="transcript" open><summary>Transcript</summary>${lesson.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("")}</details>
+<details class="transcript"><summary>Transcript</summary>${lesson.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("")}</details>
 <div class="row">${prev ? `<a class="btn ghost" href="/course/${prev.mod}/${prev.slug}">&larr; ${esc(prev.title)}</a>` : ""}${next ? `<a class="btn push" href="/course/${next.mod}/${next.slug}">Next: ${esc(next.title)} &rarr;</a>` : ""}</div>`,
   });
 }
