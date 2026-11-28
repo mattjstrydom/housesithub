@@ -95,13 +95,14 @@ h3 { font-size: 1.3rem; letter-spacing: -.015em; line-height: 1.2; }
 .nav-links a { text-decoration: none; font-weight: 500; font-size: .98rem; color: var(--ink); background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat; padding-bottom: 4px; transition: background-size .25s var(--ease); }
 .nav-links a:hover { background-size: 100% 2px; }
 .nav .btn { min-height: 44px; padding: 0 20px; font-size: .95rem; }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
 .menu-btn { display: none; width: 44px; height: 44px; border: 0; background: transparent; color: var(--ink); border-radius: var(--r-sm); }
 .mobile-menu { display: none; padding: 8px 0 24px; border-top: 1px solid var(--line); }
 .mobile-menu.open { display: block; }
 .mobile-menu a:not(.btn) { display: block; padding: 14px 0; font: 600 1.25rem/1.2 var(--font-display); color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
 .mobile-menu .btn { margin-top: 20px; width: 100%; }
 @media (max-width: 860px) {
-  .nav-links, .nav-cta { display: none; }
+  .nav-links, .nav-cta, .nav-actions { display: none; }
   .menu-btn { display: grid; place-items: center; }
 }
 
