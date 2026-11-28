@@ -210,7 +210,8 @@ test("lesson pages show the transcript, a video placeholder and navigation; unkn
   const cookie = await newStudent();
   const page = await (await get("/course/m1/l2", cookie)).text();
   assert.match(page, /Transcript/);
-  assert.match(page, /on its way/);
+  assert.match(page, /fast\.wistia\.net\/embed\/iframe\/a94o54ereo/);
+  assert.doesNotMatch(page, /on its way/);
   assert.match(page, /Next: /);
   assert.equal((await get("/course/m9/l1", cookie)).status, 404);
   assert.equal((await get("/course/m1/l99", cookie)).status, 404);
