@@ -31,6 +31,11 @@ Own-build gated course for "Learn How to House Sit" (36 lessons, 5 modules), liv
 - Bug found and fixed (312e76b): browsers send `Origin: null` on same-origin form posts under `Referrer-Policy: no-referrer`, which made login fail with `bad_origin`. `sameOrigin` now falls back to `Sec-Fetch-Site`.
 - Checkout on a preview still redirects to the hardcoded live `SITE_ORIGIN` thank-you page, so that page cannot be tested on a preview.
 
+## Admin dashboard (added, tested in unit tests, needs a click-through on the preview)
+- `/admin` (learner list: access, lessons done, last seen), `/admin/user/<id>` (per-lesson progress, purchases), grant and revoke (POST `/api/admin/grant`, `/api/admin/revoke`, origin checked). No email is sent on grant; the learner logs in at `/login`.
+- Admins = emails in the `ADMIN_EMAILS` var in `wrangler.jsonc` (currently matt@housesithub.com). They use the normal magic link and need no purchase. Everyone else gets a 404 on `/admin`.
+- A revoke is stored as `refunded` (the purchases CHECK only allows active or refunded). Grants are `source = 'manual'`. List is capped at the newest 500 learners.
+
 ## Not done yet (in order)
 1. Fix `thank-you.html` "Go to your course" (hardcoded `https://courses.housesithub.com/`, the old LearnPress site). It should point at `/login` or `/course` on the new site. Needs Matt's approval of the copy.
 2. Check email headers (Gmail "Show original") for SPF, DKIM and DMARC PASS. Only inbox placement is confirmed.
