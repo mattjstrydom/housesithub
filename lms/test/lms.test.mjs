@@ -206,6 +206,18 @@ test("origin null (no-referrer same-origin form post) is judged by Sec-Fetch-Sit
   assert.equal((await post("/api/progress", { lesson: "m1l1", done: "1" }, evil)).status, 403);
 });
 
+test("only lesson pages may run scripts (Wistia loader plus our speed file); everything else stays script-src none", async () => {
+  const cookie = await newStudent();
+  const lesson = await get("/course/m1/l2", cookie);
+  const body = await lesson.text();
+  assert.match(lesson.headers.get("content-security-policy"), /script-src 'self' https:\/\/fast\.wistia\.net/);
+  assert.match(body, /class="wistia_embed" name="wistia_embed"/);
+  assert.match(body, /src="\/assets\/js\/lesson-video\.js"/);
+  for (const path of ["/course", "/course/downloads", "/login"]) {
+    assert.match((await get(path, cookie)).headers.get("content-security-policy"), /script-src 'none'/);
+  }
+});
+
 test("lesson pages show the transcript, a video placeholder and navigation; unknown lessons 404", async () => {
   const cookie = await newStudent();
   const page = await (await get("/course/m1/l2", cookie)).text();

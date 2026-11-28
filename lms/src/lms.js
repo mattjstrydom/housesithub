@@ -26,6 +26,8 @@ const CSP = [
   "frame-ancestors 'none'",
   "base-uri 'none'",
 ].join("; ");
+// Lesson pages only: allow Wistia's loader and our own /assets/js file (default playback speed). Every other page keeps script-src 'none'.
+const LESSON_CSP = CSP.replace("script-src 'none'", "script-src 'self' https://fast.wistia.net https://fast.wistia.com");
 
 const baseHeaders = {
   "cache-control": "private, no-store",
@@ -284,6 +286,8 @@ export async function handleLms(request, env) {
     const i = LESSONS.indexOf(lesson);
     return html(
       pages.lessonPage({ user, course, lesson, mod, done: await q.getProgress(env.DB, user.id), wistiaId: wistia[lesson.id] || null, prev: LESSONS[i - 1], next: LESSONS[i + 1] }),
+      200,
+      { "content-security-policy": LESSON_CSP },
     );
   }
   return null;
