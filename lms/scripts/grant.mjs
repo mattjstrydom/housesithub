@@ -2,7 +2,7 @@
 //   node scripts/grant.mjs grant  student@example.com [--local]
 //   node scripts/grant.mjs revoke student@example.com [--local]
 // After a grant, tell the student to go to /login and enter that email to get their link.
-import { spawnSync } from "node:child_process";
+import { npx } from "./run.mjs";
 
 const [action, rawEmail, flag] = process.argv.slice(2);
 const email = String(rawEmail || "").trim().toLowerCase();
@@ -16,5 +16,4 @@ const sql =
     ? `INSERT OR IGNORE INTO users (email, created_at) VALUES ('${e}', strftime('%s','now'));
        INSERT INTO purchases (user_id, source, status, created_at) SELECT id, 'manual', 'active', strftime('%s','now') FROM users WHERE email = '${e}';`
     : `UPDATE purchases SET status = 'refunded' WHERE user_id = (SELECT id FROM users WHERE email = '${e}');`;
-const r = spawnSync("npx", ["wrangler", "d1", "execute", "housesithub-lms", flag === "--local" ? "--local" : "--remote", "--command", sql], { stdio: "inherit", shell: process.platform === "win32" });
-process.exit(r.status ?? 1);
+process.exit(npx(["wrangler", "d1", "execute", "housesithub-lms", flag === "--local" ? "--local" : "--remote", "--command", sql]));

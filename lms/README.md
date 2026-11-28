@@ -31,9 +31,9 @@ The tests use SQLite in place of Cloudflare D1. They have not been run against r
 ## Set up, in order
 
 1. **Resend.** Create an account, add your domain, add the SPF and DKIM records it shows, and add a DMARC record. Create an API key.
-2. **Database.** `npx wrangler d1 create housesithub-lms`, paste the id into `wrangler.jsonc`, then
+2. **Database.** `npx wrangler d1 create housesithub-lms`, paste the id into `wrangler.jsonc`. When Wrangler offers to add the binding to your config for you, answer no: the binding is already in the file. Then
    `npx wrangler d1 migrations apply housesithub-lms --remote`.
-3. **File bucket.** `npx wrangler r2 bucket create housesithub-course-files`, then
+3. **File bucket.** First switch R2 on in the Cloudflare dashboard (open R2 in the sidebar and follow the prompts; until then Wrangler stops with error 10042 "Please enable R2"). Then `npx wrangler r2 bucket create housesithub-course-files`, then, from the repo root, `node lms\scripts\upload_files.mjs "<path to Course Rebuild>\Toolkit"`. Add `--dry-run` first to see what it would upload.
    `node scripts/upload_files.mjs "<path to Course Rebuild>\Toolkit"  (run from this folder)`.
 4. **Secrets** (never in the repo): `npx wrangler secret put STRIPE_WEBHOOK_SECRET` and `npx wrangler secret put RESEND_API_KEY`.
 5. **Stripe.** Add a webhook endpoint `https://www.housesithub.com/api/stripe-webhook` for the events
