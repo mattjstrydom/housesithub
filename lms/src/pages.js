@@ -121,7 +121,7 @@ export function dashboardPage({ user, course, done }) {
 export function lessonPage({ user, course, lesson, mod, done, wistiaId, prev, next }) {
   const isDone = done.has(lesson.id);
   const video = wistiaId
-    ? `<div class="video"><iframe src="https://fast.wistia.net/embed/iframe/${encodeURIComponent(wistiaId)}?seo=false" title="${esc(lesson.title)}" allow="autoplay; fullscreen" allowfullscreen></iframe></div>`
+    ? `<div class="video"><iframe src="https://fast.wistia.net/embed/iframe/${encodeURIComponent(wistiaId)}?seo=false" title="${esc(lesson.title)}" referrerpolicy="origin" allow="autoplay; fullscreen" allowfullscreen></iframe></div>`
     : `<div class="video"><div class="soon"><p>The video for this lesson is on its way.<br>You can read the full transcript below.</p></div></div>`;
   return layout({
     user,
