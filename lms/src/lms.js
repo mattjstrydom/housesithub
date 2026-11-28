@@ -53,7 +53,8 @@ function readCookie(request) {
 // Browsers always send Origin (or Sec-Fetch-Site) on form posts. Reject posts that come from another site.
 function sameOrigin(request, url) {
   const origin = request.headers.get("origin");
-  if (origin) return origin === url.origin;
+  // "null" is what browsers send for same-origin form posts under Referrer-Policy: no-referrer; fall through to Sec-Fetch-Site.
+  if (origin && origin !== "null") return origin === url.origin;
   const site = request.headers.get("sec-fetch-site");
   return !site || site === "same-origin" || site === "none";
 }

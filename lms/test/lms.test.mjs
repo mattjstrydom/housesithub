@@ -198,6 +198,14 @@ test("posts from another site are refused", async () => {
   assert.equal((await post("/api/login", { email: "jane@example.com" }, { origin: "https://evil.example" })).status, 403);
 });
 
+test("origin null (no-referrer same-origin form post) is judged by Sec-Fetch-Site", async () => {
+  const cookie = await newStudent();
+  const ok = { cookie, origin: "null", "sec-fetch-site": "same-origin" };
+  assert.equal((await post("/api/progress", { lesson: "m1l1", done: "1" }, ok)).status, 303);
+  const evil = { cookie, origin: "null", "sec-fetch-site": "cross-site" };
+  assert.equal((await post("/api/progress", { lesson: "m1l1", done: "1" }, evil)).status, 403);
+});
+
 test("lesson pages show the transcript, a video placeholder and navigation; unknown lessons 404", async () => {
   const cookie = await newStudent();
   const page = await (await get("/course/m1/l2", cookie)).text();
