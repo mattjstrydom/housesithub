@@ -286,7 +286,7 @@ export default {
      "title": "Warning signs and unsuitable sits",
      "minutes": 2,
      "paragraphs": [
-      "Some warning signs are easy to spot. These could include an aggressive animal, a request for money, if it's an unpaid platform, or no clear plan for emergencies.",
+      "Some warning signs are easy to spot. These could include an aggressive animal, an unexpected request for money, or no clear plan for emergencies.",
       "Others are less obvious. The duties may be vague. The photographs may not show where you'll be sleeping. Or the owner may suddenly add extra responsibilities.",
       "That happened to us. We accepted a sit in Georgia with a few animals. And the closer we got to the dates, the more animals were added. By the time we arrived, we had two dogs, five cats, two horses and two donkeys. We stayed, and we actually enjoyed it, but it was hard work, and we hadn't signed up for that.",
       "Another time, in Dallas, we cared for four big dogs. We hadn't realized the house was quite small, and right in the middle of town. So we were taking them out for regular breaks and walks, all day. It was hectic. Make sure you know what you're signing up for.",
