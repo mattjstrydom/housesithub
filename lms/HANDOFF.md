@@ -25,11 +25,17 @@ Own-build gated course for "Learn How to House Sit" (36 lessons, 5 modules), liv
 - Preview URL (verified live): https://lms-housesithub.closedlogic.workers.dev. `/login` loads, `/course` redirects to login when signed out, `/src/worker.js` is not served.
 - `wrangler.jsonc`: preview `SITE_ORIGIN` is the preview URL; preview vars do NOT include `STRIPE_PUBLISHABLE_KEY` (top level holds the live key, so a Stripe TEST publishable key must be added under `previews.vars`).
 
+## Done on the preview (verified 2026-11-28)
+- Preview `lms` has secrets `STRIPE_WEBHOOK_SECRET` (test endpoint), `RESEND_API_KEY`, `STRIPE_SECRET_KEY` (test), set by Matt with `npx wrangler preview secret put NAME --name lms` (run from the repo root). Base-config secrets only reach previews created later, so use the per-preview command. `previews.vars` holds the test `STRIPE_PUBLISHABLE_KEY` and test `STRIPE_PRODUCT_ID`.
+- Full flow passed: test purchase, webhook, welcome email (inbox), magic link, session, lesson page, progress, downloads, full refund removes access (the "no active purchase" page). Buyer email does arrive in `customer_details.email`.
+- Bug found and fixed (312e76b): browsers send `Origin: null` on same-origin form posts under `Referrer-Policy: no-referrer`, which made login fail with `bad_origin`. `sameOrigin` now falls back to `Sec-Fetch-Site`.
+- Checkout on a preview still redirects to the hardcoded live `SITE_ORIGIN` thank-you page, so that page cannot be tested on a preview.
+
 ## Not done yet (in order)
-1. Preview secrets. Previews do not inherit production settings. Check Cloudflare's Previews docs for how to set secrets on a preview, then have Matt set `STRIPE_WEBHOOK_SECRET` and `RESEND_API_KEY` himself (and a Stripe test secret key if the code needs one; read `src/worker.js` for the exact names).
-2. Resend: verify `housesithub.com` as a sending domain (SPF, DKIM, DMARC records in Cloudflare DNS), then create the API key. `EMAIL_FROM` is `House Sit Hub <course@housesithub.com>`.
-3. Stripe test mode: create a test webhook to `https://lms-housesithub.closedlogic.workers.dev/api/stripe-webhook` with the three events above.
-4. End to end test on the preview: test purchase, webhook, welcome/login email, magic link, lesson page, progress, download, full refund removes access.
+1. Fix `thank-you.html` "Go to your course" (hardcoded `https://courses.housesithub.com/`, the old LearnPress site). It should point at `/login` or `/course` on the new site. Needs Matt's approval of the copy.
+2. Check email headers (Gmail "Show original") for SPF, DKIM and DMARC PASS. Only inbox placement is confirmed.
+3. In Stripe test mode, the checkout event showed 2 webhook deliveries. Check Developers > Webhooks for a duplicate or stale test endpoint and delete it.
+4. (Stripe test webhook and end to end test: done, see above.)
 5. Wistia: upload videos (final MP4s are in Matt's `Course Rebuild\Lessons\M?L?\M?L?_final.mp4`), add ids to `src/wistia.json`, test domain protection on the free plan.
 6. Grant the one existing LearnPress student: `lms/scripts/grant.mjs` (production D1, after launch decision).
 7. Copy: thank-you page, privacy policy and terms must mention the course accounts, login emails and Stripe/Resend/Wistia/Cloudflare. Draft for Matt to approve.
