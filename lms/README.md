@@ -52,7 +52,7 @@ Edit the scripts, run `node scripts/build_content.mjs "path/to/Course Rebuild/Sc
 
 - Never run on real Cloudflare D1 or R2, and no real email sent. First live test is step 7.
 - Whether Stripe fills in the buyer's email for your Elements checkout sessions. The code reads `customer_details.email`. If a paid session has no email it is logged ("grant it by hand") and nothing is granted, so check this in test mode.
-- Free plan allowances for D1 (daily reads and writes) and R2, and whether R2 needs a card on file, are unconfirmed.
+- Free plan limits (from Cloudflare's own pricing pages, updated 30 Oct 2026): D1 allows 5 million rows read and 100,000 rows written a day, 5 GB in total. R2 allows 10 GB stored, 1 million writes and 10 million reads a month, with no download fees. That is far more than a course with tens of students needs. The R2 page does not say whether a payment method must be on file to switch R2 on, so check that in the Cloudflare dashboard.
 - Disputes and chargebacks do not remove access. Only a full refund does.
 - Sessions last 30 days from login and are not extended while in use.
 - Page appearance has not been checked in a browser yet. Run it with `npx wrangler dev` and look at it before launch.

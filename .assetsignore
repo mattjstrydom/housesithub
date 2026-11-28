@@ -4,3 +4,8 @@ brand-kit/
 brand-kit.zip
 docs/
 lms/
+src/
+wrangler.jsonc
+package.json
+.cloudflare-build
+.claude/
