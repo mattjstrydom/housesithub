@@ -1,58 +1,46 @@
 # LMS handoff (read this first)
 
-Own-build gated course for "Learn How to House Sit" (36 lessons, 5 modules), living inside the House Sit Hub site Worker. Code is in `lms/`, wired in at the top of `fetch()` in `src/worker.js` via `handleLms(request, env)`. Branch: `lms` (pushed). Owner: Matt. Read `lms/README.md` for the architecture and `LMS_Scope_Own_Build.md` (in Matt's Course Rebuild folder, not the repo) for the original scope.
+Own-build gated course for "Learn How to House Sit" (36 lessons, 5 modules), living inside the House Sit Hub site Worker. Code is in `lms/`, wired in at the top of `fetch()` in `src/worker.js` via `handleLms(request, env)`. Owner: Matt. Read `lms/README.md` for the architecture and `LMS_Scope_Own_Build.md` (in Matt's Course Rebuild folder, not the repo) for the original scope.
+
+**Status: LIVE on https://www.housesithub.com since 2026-11-28** (`main`, commit b391a7a at launch). Matt reported the live checkout, email and course flow working after launch.
 
 ## Rules (do not break)
-1. Never run `npx wrangler deploy` and never merge `lms` into `main` without Matt saying so. `main` is the live site.
+1. `main` is the live site and deploys on push. Never run `npx wrangler deploy`. Only merge to `main` when Matt says so. Work on a branch and check the Cloudflare preview first.
 2. Secrets (Stripe signing secret, Resend API key, any Stripe key) are typed or pasted by Matt only. Do not ask him to paste them in chat and do not write them to files or commits.
 3. Never use em dashes in any copy or docs. Matt wants verified facts, no guessing. Ask before assuming.
 4. Wrangler prompts: answer NO to "add binding on your behalf" (it duplicates the D1 binding and reformats `wrangler.jsonc`). Windows: use `lms/scripts/run.mjs` wrappers (paths contain spaces).
-5. Repo quirks: Windows `autocrlf=true`; keep LF in committed `wrangler.jsonc` and `src/worker.js`. A stale `.git/*.lock` may need deleting.
+5. Repo quirks: Windows `autocrlf=true`; keep LF in committed `wrangler.jsonc` and `src/worker.js`. A stale `.git/*.lock` may need deleting. Do not commit the unrelated mode/CRLF noise in `git status`.
 
-## What exists
-- Passwordless login: magic links (15 min, single use, token hashes only; GET shows a confirm page, POST consumes), 30-day sessions (HttpOnly, Secure, SameSite Lax), origin checks, rate limits (5 per 15 min per email, 20 per 15 min per IP).
-- Stripe webhook `/api/stripe-webhook`: HMAC signature check (300 s tolerance), idempotent events. Events needed: `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `charge.refunded`. A full refund removes access.
-- 36 lessons generated from the approved scripts (`src/content.generated.js`, built by `scripts/build_content.mjs`). Wistia ids go in `src/wistia.json` (currently `{}`).
-- Downloads from R2 limited to the manifest in `src/files.js` (workbook plus checklists 01 to 19).
-- CSP with `script-src 'none'`, Wistia frames only.
-- 16 unit tests: `node --test lms/test/lms.test.mjs` (Node 22.13+).
+## What exists (all on `main`)
+- Passwordless login: magic links (15 min, single use, token hashes only; GET shows a confirm page, POST consumes), 30 day sessions (HttpOnly, Secure, SameSite Lax), origin checks, rate limits (5 per 15 min per email, 20 per 15 min per IP).
+- Stripe webhook `/api/stripe-webhook`: HMAC signature check, idempotent events. Events: `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `charge.refunded`. A full refund removes access (stored as purchase status `refunded`).
+- 36 lessons from the approved scripts (`src/content.generated.js`, built by `scripts/build_content.mjs`). Wistia ids for all 36 are in `src/wistia.json`. The transcript loads collapsed.
+- Downloads from R2, limited to the manifest in `src/files.js` (workbook plus checklists 01 to 19).
+- Admin dashboard: `/admin` (learners: access, lessons done, last seen), `/admin/user/<id>` (per lesson progress, purchases), grant and revoke (POST `/api/admin/grant`, `/api/admin/revoke`, origin checked). Admins are the emails in the `ADMIN_EMAILS` var in `wrangler.jsonc` (currently matt@housesithub.com); they use the normal magic link and need no purchase; everyone else gets a 404. Granting sends no email (the learner logs in at `/login`). A revoke is stored as `refunded` because the purchases CHECK only allows `active` or `refunded`. Grants are `source = 'manual'`. The list is capped at the newest 500 learners.
+- Homepage: a Log in button in the nav and mobile menu. The buy buttons use the custom checkout (`USE_CUSTOM_CHECKOUT = true` in `index.html`; set it to `false` to roll back to the hosted Stripe page, which is also the automatic fallback). The thank-you button goes to `/course`.
+- CSP: `script-src 'none'` on every page, Wistia frames only. Pages send `Referrer-Policy: no-referrer`, which caused two bugs, both fixed: browsers send `Origin: null` on form posts (`sameOrigin` falls back to `Sec-Fetch-Site`), and Wistia refused to embed with no referrer (the lesson iframe has `referrerpolicy="origin"`).
+- 19 unit tests: `node --test lms/test/lms.test.mjs` (Node 22.13+).
 
 ## Cloudflare state
-- Worker `housesithub`, account subdomain `closedlogic.workers.dev`. Git integration builds from `mattjstrydom/housesithub`. Production branch `main` (deploy command `npx wrangler deploy`). Preview builds ON for other branches (`npx wrangler preview`).
-- Production D1 `housesithub-lms` id `e9a8fde7-6576-420e-b99f-c5493138ba6e`, migrated.
-- Staging D1 `housesithub-lms-staging` id `57d89ee6-5d6b-4164-b06c-73abba81e626`, migrated (tables created from `lms/migrations/0001_init.sql`). The `previews` block in `wrangler.jsonc` points previews at staging.
-- R2 bucket `housesithub-course-files` holds the workbook (root) and 19 checklists (`checklists/`). Previews share this bucket (read only use).
-- Preview URL (verified live): https://lms-housesithub.closedlogic.workers.dev. `/login` loads, `/course` redirects to login when signed out, `/src/worker.js` is not served.
-- `wrangler.jsonc`: preview `SITE_ORIGIN` is the preview URL; preview vars do NOT include `STRIPE_PUBLISHABLE_KEY` (top level holds the live key, so a Stripe TEST publishable key must be added under `previews.vars`).
+- Worker `housesithub`, account subdomain `closedlogic.workers.dev`. Git integration builds from `mattjstrydom/housesithub`. Production branch `main`. Preview builds are on for other branches (`npx wrangler preview`).
+- Production D1 `housesithub-lms` id `e9a8fde7-6576-420e-b99f-c5493138ba6e`. Staging D1 `housesithub-lms-staging` id `57d89ee6-5d6b-4164-b06c-73abba81e626`; the `previews` block in `wrangler.jsonc` points previews at staging. Both migrated from `lms/migrations/0001_init.sql`.
+- R2 bucket `housesithub-course-files` holds the workbook (root) and 19 checklists (`checklists/`). Previews share it.
+- Production secrets (set by Matt): `STRIPE_SECRET_KEY`, `STRIPE_PRODUCT_ID`, `STRIPE_WEBHOOK_SECRET` (live endpoint), `RESEND_API_KEY`. `STRIPE_PUBLISHABLE_KEY`, `SITE_ORIGIN`, `EMAIL_FROM` and `ADMIN_EMAILS` are plain vars in `wrangler.jsonc`.
+- Preview `lms` (https://lms-housesithub.closedlogic.workers.dev) has test secrets set per preview with `npx wrangler preview secret put NAME --name lms` (run from the repo root). Previews do not inherit production settings, and base-config secrets only reach previews created later. Other branch previews (for example `nav-login`) have no Stripe secrets, so checkout cannot be tested on them. `previews.vars` holds the test `STRIPE_PUBLISHABLE_KEY` and test `STRIPE_PRODUCT_ID`.
+- Checkout on any preview still redirects to the hardcoded live `SITE_ORIGIN` thank-you page, so that page cannot be tested on a preview.
+- Wistia: domain restriction is on with `housesithub.com` and the preview host. Add other preview hosts there if you test videos on them.
 
-## Done on the preview (verified 2026-11-28)
-- Preview `lms` has secrets `STRIPE_WEBHOOK_SECRET` (test endpoint), `RESEND_API_KEY`, `STRIPE_SECRET_KEY` (test), set by Matt with `npx wrangler preview secret put NAME --name lms` (run from the repo root). Base-config secrets only reach previews created later, so use the per-preview command. `previews.vars` holds the test `STRIPE_PUBLISHABLE_KEY` and test `STRIPE_PRODUCT_ID`.
-- Full flow passed: test purchase, webhook, welcome email (inbox), magic link, session, lesson page, progress, downloads, full refund removes access (the "no active purchase" page). Buyer email does arrive in `customer_details.email`.
-- Bug found and fixed (312e76b): browsers send `Origin: null` on same-origin form posts under `Referrer-Policy: no-referrer`, which made login fail with `bad_origin`. `sameOrigin` now falls back to `Sec-Fetch-Site`.
-- Checkout on a preview still redirects to the hardcoded live `SITE_ORIGIN` thank-you page, so that page cannot be tested on a preview.
+## Verified
+End to end on the preview: test purchase, webhook, welcome email (inbox; SPF, DKIM and DMARC all PASS), magic link, session, lessons, progress, downloads, full refund removes access. The buyer email arrives in `customer_details.email`. Production: `/login` loads, `/src/worker.js`, `/lms/*` and `/wrangler.jsonc` return 404, the webhook rejects unsigned requests, and the production D1 binding responds.
 
-## Admin dashboard (added, tested in unit tests, needs a click-through on the preview)
-- `/admin` (learner list: access, lessons done, last seen), `/admin/user/<id>` (per-lesson progress, purchases), grant and revoke (POST `/api/admin/grant`, `/api/admin/revoke`, origin checked). No email is sent on grant; the learner logs in at `/login`.
-- Admins = emails in the `ADMIN_EMAILS` var in `wrangler.jsonc` (currently matt@housesithub.com). They use the normal magic link and need no purchase. Everyone else gets a 404 on `/admin`.
-- A revoke is stored as `refunded` (the purchases CHECK only allows active or refunded). Grants are `source = 'manual'`. List is capped at the newest 500 learners.
+## Open items
+1. Grant the one existing LearnPress student on production with `lms/scripts/grant.mjs` (needs their email).
+2. Copy: privacy policy and terms must mention course accounts, login emails and Stripe, Resend, Wistia and Cloudflare. Draft for Matt to approve.
+3. Delete the duplicate or stale Stripe test webhook endpoint (a checkout event showed 2 deliveries).
+4. Setup doc (`docs/checkout-setup.md`) items not done: a declined card test, and Apple Pay, Google Pay and Link enabled in Stripe (Apple Pay needs the domain verified).
+5. Matt should rotate a GitHub personal access token that leaked in an earlier transcript.
+6. Default video speed 1.25x: parked on branch `lms` (commit fed2a01, not merged). It adds Wistia's `E-v1.js` and `assets/js/lesson-video.js` (`_wq.push({ id: "_all", onReady: v => v.playbackRate(1.25) })`) on lesson pages only, with a relaxed `script-src`. Matt tested it on the preview and it still played at 1x. Wistia's docs do not document this call. The current `E-v1.js` does contain `_wq` and `playbackRate` and attaches to `iframe.wistia_embed` or `iframe[name=wistia_embed]`, which the iframe now has. The cause is not found. A diagnostic page test was started and abandoned. Next steps if resumed: check the browser console on a lesson for blocked requests, or try Wistia's Aurora player (`player.js` and `<wistia-player>`).
 
-## Not done yet (in order)
-1. Fix `thank-you.html` "Go to your course" (hardcoded `https://courses.housesithub.com/`, the old LearnPress site). It should point at `/login` or `/course` on the new site. Needs Matt's approval of the copy.
-2. Check email headers (Gmail "Show original") for SPF, DKIM and DMARC PASS. Only inbox placement is confirmed.
-3. In Stripe test mode, the checkout event showed 2 webhook deliveries. Check Developers > Webhooks for a duplicate or stale test endpoint and delete it.
-4. (Stripe test webhook and end to end test: done, see above.)
-5. Wistia: upload videos (final MP4s are in Matt's `Course Rebuild\Lessons\M?L?\M?L?_final.mp4`), add ids to `src/wistia.json`, test domain protection on the free plan.
-6. Grant the one existing LearnPress student: `lms/scripts/grant.mjs` (production D1, after launch decision).
-7. Copy: thank-you page, privacy policy and terms must mention the course accounts, login emails and Stripe/Resend/Wistia/Cloudflare. Draft for Matt to approve.
-8. Launch decision (Matt's): merge to `main`, switch Stripe webhook to live mode with live secrets. After the first production deploy confirm `https://www.housesithub.com/src/worker.js` is not public (`.assetsignore` already excludes `src/`, `lms/`, `wrangler.jsonc`).
-
-## Unverified assumptions (test these first)
-- Stripe returns the buyer email in `customer_details.email` for Elements-based sessions. The webhook depends on it.
-- Wistia domain-level protection works on Matt's plan.
-- Resend SPF/DKIM/DMARC pass and mail lands in the inbox, not spam.
-- Pages look right in a real browser (only fetched as text so far).
-- Production D1 and R2 bindings resolve once deployed (only preview has been exercised).
-
-## Housekeeping
-- Matt should rotate a GitHub personal access token that leaked in an earlier transcript.
-- Do not commit the unrelated mode/CRLF noise showing in `git status` on other files.
+## Gotchas
+- After a deploy, Cloudflare edges briefly serve the old pages. Check several times before concluding a deploy failed or worked.
+- `/checkout.html` redirects to `/checkout` (`html_handling`); use `curl -L` when checking static pages.
